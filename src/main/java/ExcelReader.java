@@ -12,8 +12,7 @@ import java.util.*;
 import static org.apache.poi.ss.usermodel.CellType.*;
 
 public class ExcelReader {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
         ArrayList partners =new ArrayList();
         ArrayList headerNames = new ArrayList();
         ArrayList heelerNames = new ArrayList();
@@ -107,6 +106,8 @@ public class ExcelReader {
             System.out.println(partner.toString());
         }
 
+        ExcelWriter.populateEntries(partners);
+
     }
 
     public static ArrayList<String> generatePartners(ArrayList headerDraw2, ArrayList headerDraw3, ArrayList heelerDraw2, ArrayList heelerDraw3, ArrayList headerNames,
@@ -138,9 +139,7 @@ public class ExcelReader {
                    } else if (partner.equals(headerDraw2.get(i).toString())) {
                        System.out.println("Same person, trying again. Tried " + partner + " and " + headerDraw2.get(i).toString());
                        //continue;
-                   } else if (!"a".equals("b")) {
-                       //check to see if each person has 6 entries
-                   } else {
+                   }  else {
                        System.out.println("Valid response. Adding " + headerDraw2.get(i).toString() + " " + partner);
                        partners.add(headerDraw2.get(i).toString() + " " + partner);
                        looping = false;
