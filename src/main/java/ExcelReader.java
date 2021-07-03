@@ -142,7 +142,8 @@ public class ExcelReader {
                    }  else {
                        System.out.println("Valid response. Adding " + headerDraw2.get(i).toString() + " " + partner);
                        partners.add(headerDraw2.get(i).toString() + " " + partner);
-                       looping = false;
+                       attemptRemoval(headerDraw2.get(i).toString() + " " + partner, headerNames, heelerNames, headerDraw2,
+                               headerDraw3, heelerDraw2, heelerDraw3);
                        break;
                    }
                }
@@ -155,7 +156,6 @@ public class ExcelReader {
             for(int j = 0; j < 3; j++) {
                 String rank1 = headerDraw3.get(i).toString().substring(headerDraw3.get(i).toString().length() - 3);
                 //for each header that needs two partners, draw 2 heelers
-                boolean looping = true;
                 while (true) {
                     String partner = getRandomPartner(heelerNames);
                     float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
@@ -172,7 +172,6 @@ public class ExcelReader {
                     } else {
                         System.out.println("Valid response. Adding " + headerDraw3.get(i).toString() + " " + partner);
                         partners.add(headerDraw3.get(i).toString() + " " + partner);
-                        looping = false;
                         break;
                     }
                 }
@@ -185,7 +184,6 @@ public class ExcelReader {
             for(int j = 0; j < 2; j++) {
                 String rank1 = heelerDraw2.get(i).toString().substring(heelerDraw2.get(i).toString().length() - 3);
                 //for each heeler that needs 2 partners, draw 2 headers
-                boolean looping = true;
                 while (true) {
                     String partner = getRandomPartner(headerNames);
                     float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
@@ -201,7 +199,6 @@ public class ExcelReader {
                     } else {
                         System.out.println("Valid response. Adding " + partner + " " + heelerDraw2.get(i).toString());
                         partners.add(partner + " " + heelerDraw2.get(i).toString());
-                        looping = false;
                         break;
                     }
                 }
@@ -214,8 +211,7 @@ public class ExcelReader {
             for(int j = 0; j < 3; j++) {
                 String rank1 = heelerDraw3.get(i).toString().substring(heelerDraw3.get(i).toString().length() - 3);
                 //for each heeler that needs 3 partners, draw 3 headers
-                boolean looping = true;
-                while (looping) {
+                while (true) {
                     String partner = getRandomPartner(headerNames);
                     float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                     if (partners.contains(partner + " " + heelerDraw3.get(i).toString())) {
@@ -232,7 +228,6 @@ public class ExcelReader {
                         partners.add(partner  + " " + heelerDraw3.get(i).toString());
                         break;
                     }
-
                 }
             }
         }
@@ -244,6 +239,46 @@ public class ExcelReader {
         String partner = (String) positionNames.get(index);
 
         return partner;
+    }
+
+    public static void attemptRemoval(String pairName, ArrayList headerNames, ArrayList heelerNames, ArrayList headerDraw2, ArrayList headerDraw3,
+                                      ArrayList heelerDraw2, ArrayList heelerDraw3) {
+        String[] splitNames = pairName.split("\\s+");
+        String headerName = splitNames[0] + " " + splitNames[1];
+        String heelerName = splitNames[3] + " " + splitNames[4];
+        if (headerNames.size() > heelerNames.size()) {
+            //more headers than heelers. Now check if they should have 3 or 6 header entries
+            if (Collections.frequency(headerDraw2, headerName) == 2 || Collections.frequency(headerDraw3, headerName) == 2) {
+                System.out.println(headerName + " was in headerDraw2 twice, so he gets six heads");
+                if (Collections.frequency(headerNames, headerName) == 6) {
+                    System.out.println(headerName + " has six entries, remove from list.");
+                    headerNames.remove(headerName);
+                }
+            } else {
+                //they get three entries
+                System.out.println(headerName + " was in headerDraw2 once, so he gets 3 heads");
+                if (Collections.frequency(headerNames, headerName) == 3) {
+                    System.out.println(headerName + " has 3 entries, remove from list.");
+                    headerNames.remove(headerName);
+                }
+            }
+        } else {
+            //heeler name list was bigger
+            if (Collections.frequency(heelerDraw2, heelerName) == 2 || Collections.frequency(heelerDraw3, heelerName) == 2) {
+                System.out.println(headerName + " was in heelerDraw2 or 3 twice, so he gets six heels");
+                if (Collections.frequency(heelerNames, heelerName) == 6) {
+                    System.out.println(heelerName + " has six entries, remove from list.");
+                    headerNames.remove(heelerName);
+                }
+            } else {
+                //they get three entries
+                System.out.println(heelerName + " was in heelerDraw2 once, so he gets 3 heels");
+                if (Collections.frequency(heelerNames, heelerName) == 3) {
+                    System.out.println(heelerName + " has 3 entries, remove from list.");
+                    headerNames.remove(heelerName);
+                }
+            }
+        }
     }
 
 
