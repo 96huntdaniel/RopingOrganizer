@@ -134,9 +134,9 @@ public class ExcelReader {
                                 System.out.println("Valid response. Adding " + headerDraw2.get(i).toString() + " " + partner);
                                 partners.add(headerDraw2.get(i).toString() + " " + partner);
 
-                                System.out.println("Attempting removal of " + headerDraw2.get(i));
+                                System.out.println("Attempting removal of " + partner);
 
-                                attemptRemoval(headerDraw2.get(i).toString(), "header", headerNames, headerDraw2, partners);
+                                attemptRemoval(partner, "heeler", heelerNames, heelerDraw2, partners);
 
                                 break;
                             }
@@ -145,10 +145,12 @@ public class ExcelReader {
                     }
                 }
                 //now header draw 3
+                //base off this one
                 System.out.println("HEADER DRAW 3");
-                int attempts = 3;
-                while (!heelerNames.isEmpty()) {
-                    if(attempts == 0) {
+                int attempts = 100;
+                while (heelerNames.size() > 0) {
+                    if(attempts < 1) {
+                        System.out.println("BREAKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                         break;
                     }
                         for (int i = 0; i < headerDraw3.size(); i++) {
@@ -209,9 +211,9 @@ public class ExcelReader {
                                 System.out.println("Valid response. Adding " + headerDraw3.get(i).toString() + " " + partner);
                                 partners.add(headerDraw3.get(i).toString() + " " + partner);
 
-                                System.out.println("Attempting removal of " + headerDraw3.get(i).toString() + " " + partner);
+                                System.out.println("Attempting removal of " + partner);
 
-                                attemptRemoval(headerDraw3.get(i).toString(), "header", headerNames, headerDraw3, partners);
+                                attemptRemoval(partner, "heeler", heelerNames, heelerDraw3, partners);
 
                                 break;
                             }
@@ -300,9 +302,9 @@ public class ExcelReader {
                                 System.out.println("Valid response. Adding " + partner + " " + heelerDraw2.get(i).toString());
                                 partners.add(partner + " " + heelerDraw2.get(i).toString());
 
-                                System.out.println("Attempting removal of " + heelerDraw2.get(i).toString() + " " + partner);
+                                System.out.println("Attempting removal of " + partner);
 
-                                attemptRemoval(heelerDraw2.get(i).toString(), "heeler", heelerNames, heelerDraw2, partners);
+                                attemptRemoval(partner, "header", headerNames, headerDraw2, partners);
 
                                 break;
                             }
@@ -312,6 +314,12 @@ public class ExcelReader {
                 }
             //now heeler draw 3
             System.out.println("HEELER DRAW 3");
+                int attempts = 100;
+                while (heelerNames.size() > 0) {
+                    if(attempts < 1) {
+                        System.out.println("BREAKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        break;
+                    }
             for (int i = 0; i < heelerDraw3.size(); i++) {
                 for (int j = 0; j < 3; j++) {
                     String rank1 = heelerDraw3.get(i).toString().substring(heelerDraw3.get(i).toString().length() - 3);
@@ -331,12 +339,13 @@ public class ExcelReader {
                         } else {
                             System.out.println("Valid response. Adding " + partner + " " + heelerDraw3.get(i).toString());
                             partners.add(partner + " " + heelerDraw3.get(i).toString());
-                            System.out.println("Attempting removal of " + heelerDraw3.get(i).toString() + " " + partner);
-                            attemptRemoval(heelerDraw3.get(i).toString(), "heeler", heelerNames, heelerDraw3, partners);
+                            System.out.println("Attempting removal of " + partner);
+                            attemptRemoval(partner, "header", headerNames, headerDraw3, partners);
                             break;
                         }
                     }
                 }
+            }
                 }
             } else if(heelerDraw2.size() > heelerDraw3.size()) {
                 //there are more in the draw 2 array, so loop through the draw 3 until we get 3 partners for each entry
@@ -361,41 +370,48 @@ public class ExcelReader {
                             } else {
                                 System.out.println("Valid response. Adding " + partner + " " + heelerDraw3.get(i).toString());
                                 partners.add(partner + " " + heelerDraw3.get(i).toString());
-                                System.out.println("Attempting removal of " + heelerDraw3.get(i).toString() + " " + partner);
-                                attemptRemoval(heelerDraw3.get(i).toString(), "heeler", heelerNames, heelerDraw3, partners);
+                                System.out.println("Attempting removal of " + partner);
+                                attemptRemoval(partner, "header", headerNames, headerDraw3, partners);
                                 break;
                             }
                         }
                     }
                     System.out.println("HEELER DRAW 2");
-                    for ( i = 0; i < heelerDraw2.size(); i++) {
-                        for (int j = 0; j < 2; j++) {
-                            String rank1 = heelerDraw2.get(i).toString().substring(heelerDraw2.get(i).toString().length() - 3);
-                            //for each heeler that needs 2 partners, draw 2 headers
-                            while (true) {
-                                String partner = getRandomPartner(headerNames);
-                                float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
-                                if (partners.contains(partner + " " + heelerDraw2.get(i).toString())) {
-                                    System.out.println("Tried to add... " + partner + " " + heelerDraw2.get(i).toString() + " but that entry already exists.");
-                                    //continue;
-                                } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
-                                    System.out.println("Tried " + partner + " " + heelerDraw2.get(i).toString() + " which exceeds 9.5");
-                                    //continue;
-                                } else if (partner.equals(heelerDraw2.get(i).toString())) {
-                                    System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw2.get(i).toString());
-                                    //continue;
-                                } else {
-                                    System.out.println("Valid response. Adding " + partner + " " + heelerDraw2.get(i).toString());
-                                    partners.add(partner + " " + heelerDraw2.get(i).toString());
+                    int attempts = 100;
+                    while (heelerNames.size() > 0) {
+                        if (attempts < 1) {
+                            System.out.println("BREAKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            break;
+                        }
+                        for (i = 0; i < heelerDraw2.size(); i++) {
+                            for (int j = 0; j < 2; j++) {
+                                String rank1 = heelerDraw2.get(i).toString().substring(heelerDraw2.get(i).toString().length() - 3);
+                                //for each heeler that needs 2 partners, draw 2 headers
+                                while (true) {
+                                    String partner = getRandomPartner(headerNames);
+                                    float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
+                                    if (partners.contains(partner + " " + heelerDraw2.get(i).toString())) {
+                                        System.out.println("Tried to add... " + partner + " " + heelerDraw2.get(i).toString() + " but that entry already exists.");
+                                        //continue;
+                                    } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
+                                        System.out.println("Tried " + partner + " " + heelerDraw2.get(i).toString() + " which exceeds 9.5");
+                                        //continue;
+                                    } else if (partner.equals(heelerDraw2.get(i).toString())) {
+                                        System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw2.get(i).toString());
+                                        //continue;
+                                    } else {
+                                        System.out.println("Valid response. Adding " + partner + " " + heelerDraw2.get(i).toString());
+                                        partners.add(partner + " " + heelerDraw2.get(i).toString());
 
-                                    System.out.println("Attempting removal of " + heelerDraw2.get(i).toString() + " " + partner);
+                                        System.out.println("Attempting removal of " + heelerDraw2.get(i).toString() + " " + partner);
 
-                                    attemptRemoval(heelerDraw2.get(i).toString(), "heeler", heelerNames, heelerDraw2, partners);
+                                        attemptRemoval(partner, "header", headerNames, headerDraw2, partners);
 
-                                    break;
+                                        break;
+                                    }
                                 }
+                                //we have two partners for each draw2 entry now
                             }
-                            //we have two partners for each draw2 entry now
                         }
                     }
                 }
