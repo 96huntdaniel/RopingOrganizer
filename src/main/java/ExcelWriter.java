@@ -51,7 +51,7 @@ public class ExcelWriter {
                 "1",
                 new Object[] { "Number", "Header", "Heeler" });
 
-        for(int i = 2; i < partnerData.size(); i++) {
+        for(int i = 0; i < partnerData.size(); i++) {
             String[] splitNames = partnerData.get(i).toString().split("\\s+");
             String headerName = splitNames[0] + " " + splitNames[1];
             String heelerName = splitNames[3] + " " + splitNames[4];
