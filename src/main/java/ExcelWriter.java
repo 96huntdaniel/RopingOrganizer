@@ -21,7 +21,7 @@ public class ExcelWriter {
 
 
     public static void populateEntries(ArrayList partnerData) throws IOException {
-        File myFile = new File("C:\\Users\\Daniel\\Documents\\2616C600.xlsx");
+        File myFile = new File(System.getProperty("user.dir"), "InputWorkbook.xlsx");
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(myFile);
@@ -79,7 +79,7 @@ public class ExcelWriter {
         // .xlsx is the format for Excel Sheets...
         // writing the workbook into the file...
         FileOutputStream out = new FileOutputStream(
-                new File("C:\\Users\\Daniel\\Documents\\Roping3.xlsx"));
+                new File("OutputWorkbook.xlsx"));
 
         myWorkBook.write(out);
         out.close();

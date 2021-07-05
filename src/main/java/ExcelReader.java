@@ -20,7 +20,8 @@ public class ExcelReader {
         ArrayList heelerDraw2 = new ArrayList();
         ArrayList headerDraw3 = new ArrayList();
         ArrayList heelerDraw3 = new ArrayList();
-        File myFile = new File("C:\\Users\\Daniel\\Documents\\2616C600.xlsx");
+        File myFile = new File(System.getProperty("user.dir"), "InputWorkbook.xlsx");
+        System.out.println("File: " + myFile);
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(myFile);
@@ -186,9 +187,7 @@ public class ExcelReader {
                             }
                         }
                 }
-            }
-
-            if (headerDraw2.size() > headerDraw3.size()) {
+            } else if (headerDraw2.size() > headerDraw3.size()) {
                 //now header draw 3
                 System.out.println("HEADER DRAW 3");
                 for (int i = 0; i < headerDraw3.size(); i++) {
@@ -273,10 +272,7 @@ public class ExcelReader {
                     }
 
                 }
-            }
-
-
-        if (heelerNames.size() < headerNames.size()) {
+            } else if (heelerNames.size() < headerNames.size()) {
             //more heelers than headers, so headers will have extra runs.
             //now heeler draw 2
             if(heelerDraw2.size() < heelerDraw3.size()) {
