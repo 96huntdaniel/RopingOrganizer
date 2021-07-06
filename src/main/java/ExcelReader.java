@@ -131,14 +131,13 @@ public class ExcelReader {
                             } else if (partner.equals(headerDraw2.get(i).toString())) {
                                 System.out.println("Same person, trying again. Tried " + headerDraw2.get(i).toString() + " and " + partner);
                                 //continue;
+                            } else if(isMaxRuns(partner, "heeler",heelerNames, heelerDraw2, heelerDraw3, partners) && heelerNames.size() > 1) {
+                                System.out.println("This person has reached their max runs. Trying again.");
                             } else {
                                 System.out.println("Valid response. Adding " + headerDraw2.get(i).toString() + " " + partner);
                                 partners.add(headerDraw2.get(i).toString() + " " + partner);
-
-                                System.out.println("Attempting removal of " + partner);
-
-                                attemptRemoval(partner, "heeler", heelerNames, heelerDraw2, partners);
-
+                                //System.out.println("Attempting removal of " + partner);
+                                //attemptRemoval(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners);
                                 break;
                             }
                         }
@@ -148,7 +147,7 @@ public class ExcelReader {
                 //now header draw 3
                 //base off this one
                 System.out.println("HEADER DRAW 3");
-                int attempts = 100;
+                int attempts = 1000;
                 while (heelerNames.size() > 0) {
                     if(attempts < 1) {
                         System.out.println("BREAKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -173,14 +172,14 @@ public class ExcelReader {
                                         System.out.println("Same person, trying again. Tried " + partner + " and " + headerDraw3.get(i).toString());
                                         //continue;
                                         attempts --;
+                                    } else if(isMaxRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners) && heelerNames.size() > 1) {
+                                        System.out.println("This person has reached their max runs. Trying again.");
+                                        attempts--;
                                     } else {
                                         System.out.println("Valid response. Adding " + headerDraw3.get(i).toString() + " " + partner);
                                         partners.add(headerDraw3.get(i).toString() + " " + partner);
-
-                                        System.out.println("Attempting removal of " + partner);
-
-                                        attemptRemoval(partner, "heeler", heelerNames, heelerDraw3, partners);
-
+                                        //System.out.println("Attempting removal of " + partner);
+                                        //attemptRemoval(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners);
                                         break;
                                     }
                                 }
@@ -206,21 +205,20 @@ public class ExcelReader {
                             } else if (partner.equals(headerDraw3.get(i).toString())) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + headerDraw3.get(i).toString());
                                 //continue;
+                            } else if(isMaxRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners) && heelerNames.size() > 1) {
+                                System.out.println("This person has reached their max runs. Trying again.");
                             } else {
                                 System.out.println("Valid response. Adding " + headerDraw3.get(i).toString() + " " + partner);
                                 partners.add(headerDraw3.get(i).toString() + " " + partner);
-
-                                System.out.println("Attempting removal of " + partner);
-
-                                attemptRemoval(partner, "heeler", heelerNames, heelerDraw3, partners);
-
+                                //System.out.println("Attempting removal of " + partner);
+                                //attemptRemoval(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners);
                                 break;
                             }
                         }
                     }
                 }
                 System.out.println("HEADER DRAW 2");
-                int attempts = 100;
+                int attempts = 1000;
                     while (heelerNames.size() > 0) {
                         if(attempts < 1) {
                             System.out.println("BREAKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -255,14 +253,14 @@ public class ExcelReader {
                                         if(attempts < 1) {
                                             break;
                                         }
-                                    } else {
+                                    } else if(isMaxRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners) && heelerNames.size() > 1) {
+                                        System.out.println("This person has reached their max runs. Trying again.");
+                                        attempts--;
+                                    }else {
                                         System.out.println("Valid response. Adding " + headerDraw2.get(i).toString() + " " + partner);
                                         partners.add(headerDraw2.get(i).toString() + " " + partner);
-
-                                        System.out.println("Attempting removal of " + partner);
-
-                                        attemptRemoval(partner, "heeler", heelerNames, heelerDraw2, partners);
-
+                                        //System.out.println("Attempting removal of " + partner);
+                                        //attemptRemoval(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners);
                                         break;
                                     }
                                 }
@@ -294,14 +292,13 @@ public class ExcelReader {
                             } else if (partner.equals(heelerDraw2.get(i).toString())) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw2.get(i).toString());
                                 //continue;
+                            } else if(isMaxRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners) && headerNames.size() > 1) {
+                                System.out.println("This person has reached their max runs. Trying again.");
                             } else {
                                 System.out.println("Valid response. Adding " + partner + " " + heelerDraw2.get(i).toString());
                                 partners.add(partner + " " + heelerDraw2.get(i).toString());
-
-                                System.out.println("Attempting removal of " + partner);
-
-                                attemptRemoval(partner, "header", headerNames, headerDraw2, partners);
-
+                                //System.out.println("Attempting removal of " + partner);
+                                //attemptRemoval(partner, "header", headerNames, headerDraw2, headerDraw3, partners);
                                 break;
                             }
                         }
@@ -310,7 +307,7 @@ public class ExcelReader {
                 }
             //now heeler draw 3
             System.out.println("HEELER DRAW 3");
-                int attempts = 100;
+                int attempts = 1000;
                 while (heelerNames.size() > 0) {
                     if(attempts < 1) {
                         System.out.println("BREAKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -325,18 +322,21 @@ public class ExcelReader {
                         float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                         if (partners.contains(partner + " " + heelerDraw3.get(i).toString())) {
                             System.out.println("Tried to add... " + partner + " " + heelerDraw3.get(i).toString() + " but that entry already exists.");
-                            //continue;
+                           attempts--;
                         } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
                             System.out.println("Tried " + partner + " " + heelerDraw3.get(i).toString() + " which exceeds 9.5");
-                            //continue;
+                           attempts--;
                         } else if (partner.equals(heelerDraw3.get(i).toString())) {
                             System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw3.get(i).toString());
-                            //continue;
+                            attempts--;
+                        } else if(isMaxRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners) && headerNames.size() > 1) {
+                            System.out.println("This person has reached their max runs. Trying again.");
+                            attempts--;
                         } else {
                             System.out.println("Valid response. Adding " + partner + " " + heelerDraw3.get(i).toString());
                             partners.add(partner + " " + heelerDraw3.get(i).toString());
-                            System.out.println("Attempting removal of " + partner);
-                            attemptRemoval(partner, "header", headerNames, headerDraw3, partners);
+                            //System.out.println("Attempting removal of " + partner);
+                            //attemptRemoval(partner, "header", headerNames, headerDraw2, headerDraw3, partners);
                             break;
                         }
                     }
@@ -363,17 +363,19 @@ public class ExcelReader {
                             } else if (partner.equals(heelerDraw3.get(i).toString())) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw3.get(i).toString());
                                 //continue;
+                            }else if(isMaxRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners) && headerNames.size() > 1) {
+                                System.out.println("This person has reached their max runs. Trying again.");
                             } else {
                                 System.out.println("Valid response. Adding " + partner + " " + heelerDraw3.get(i).toString());
                                 partners.add(partner + " " + heelerDraw3.get(i).toString());
-                                System.out.println("Attempting removal of " + partner);
-                                attemptRemoval(partner, "header", headerNames, headerDraw3, partners);
+                                //System.out.println("Attempting removal of " + partner);
+                                //attemptRemoval(partner, "header", headerNames, headerDraw2, headerDraw3, partners);
                                 break;
                             }
                         }
                     }
                     System.out.println("HEELER DRAW 2");
-                    int attempts = 100;
+                    int attempts = 1000;
                     while (heelerNames.size() > 0) {
                         if (attempts < 1) {
                             System.out.println("BREAKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -388,21 +390,21 @@ public class ExcelReader {
                                     float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                                     if (partners.contains(partner + " " + heelerDraw2.get(i).toString())) {
                                         System.out.println("Tried to add... " + partner + " " + heelerDraw2.get(i).toString() + " but that entry already exists.");
-                                        //continue;
+                                        attempts--;
                                     } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
                                         System.out.println("Tried " + partner + " " + heelerDraw2.get(i).toString() + " which exceeds 9.5");
-                                        //continue;
+                                        attempts--;
                                     } else if (partner.equals(heelerDraw2.get(i).toString())) {
                                         System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw2.get(i).toString());
-                                        //continue;
+                                        attempts--;
+                                    } else if(isMaxRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners) && headerNames.size() > 1) {
+                                        System.out.println("This person has reached their max runs. Trying again.");
+                                        attempts--;
                                     } else {
                                         System.out.println("Valid response. Adding " + partner + " " + heelerDraw2.get(i).toString());
                                         partners.add(partner + " " + heelerDraw2.get(i).toString());
-
-                                        System.out.println("Attempting removal of " + heelerDraw2.get(i).toString() + " " + partner);
-
-                                        attemptRemoval(partner, "header", headerNames, headerDraw2, partners);
-
+                                        //System.out.println("Attempting removal of " + heelerDraw2.get(i).toString() + " " + partner);
+                                        //attemptRemoval(partner, "header", headerNames, headerDraw2, headerDraw3, partners);
                                         break;
                                     }
                                 }
@@ -425,8 +427,8 @@ public class ExcelReader {
         return partner;
     }
 
-    public static void attemptRemoval(String roperName, String positionName, ArrayList positionNames, ArrayList positionDrawX, ArrayList partnerList) {
-        int numOfEntries = Collections.frequency(positionDrawX, roperName);
+    public static boolean isMaxRuns(String roperName, String positionName, ArrayList positionNames, ArrayList positionDraw2,
+                                  ArrayList positionDraw3, ArrayList partnerList) {
         ArrayList headerRuns = new ArrayList();
         ArrayList heelerRuns = new ArrayList();
         for (int i = 0; i < partnerList.size(); i++) {
@@ -437,168 +439,107 @@ public class ExcelReader {
             heelerRuns.add(heelerName);
             //System.out.println("Added " + headerName + " and " + heelerName);
         }
+        int numOfEntries = Collections.frequency(positionDraw2, roperName) + Collections.frequency(positionDraw3, roperName);
+        System.out.println(roperName + " is in draw 2 " + Collections.frequency(positionDraw2, roperName) + " time and draw 3 " +
+                Collections.frequency(positionDraw3, roperName) + " times.");
         if(positionName == "heeler") {
             //if we're here, it means the heelerlist was bigger. We're looping the headerDrawX arrays and trying to remove from heelerNames
-            if(Collections.frequency(positionDrawX, roperName) == 1) {
+            if(numOfEntries == 1) {
                 System.out.println("In there once, with " + Collections.frequency(heelerRuns, roperName) + " current runs.");
-                if(Collections.frequency(heelerRuns, roperName) == 3) {
+                if (Collections.frequency(heelerRuns, roperName) == 3) {
+                    System.out.println(roperName + " has three runs. Removing from array.");
+                    return true;
+                    //System.out.println("Position names: " + positionNames);
+                }
+            }
+            if(numOfEntries == 2) {
+                System.out.println("In there twice.");
+                if(Collections.frequency(heelerRuns, roperName) == 6) {
+                    System.out.println(roperName + " has six runs. Removing from array.");
+                    return true;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        if(positionName == "header") {
+            //if we're here, it means the headerlist was bigger. We're looping the heelerDrawX arrays and trying to remove from headerNames
+            if(numOfEntries == 1) {
+                System.out.println("In there once, with " + Collections.frequency(headerRuns, roperName) + " current runs.");
+                if(Collections.frequency(headerRuns, roperName) == 3) {
+                    System.out.println(roperName + " has three runs. Removing from array.");
+                    return true;
+                    //System.out.println("Position names: " + positionNames);
+                }
+            }
+            if(numOfEntries == 2) {
+                System.out.println("In there twice.");
+                if(Collections.frequency(headerRuns, roperName) == 6) {
+                    System.out.println(roperName + " has six runs. Removing from array.");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void attemptRemoval(String roperName, String positionName, ArrayList positionNames, ArrayList positionDraw2, ArrayList positionDraw3, ArrayList partnerList) {
+        ArrayList headerRuns = new ArrayList();
+        ArrayList heelerRuns = new ArrayList();
+        for (int i = 0; i < partnerList.size(); i++) {
+            String[] splitNames = partnerList.get(i).toString().split("\\s+");
+            String headerName = splitNames[0] + " " + splitNames[1] + " " + splitNames[2];
+            String heelerName = splitNames[3] + " " + splitNames[4] + " " + splitNames[5];
+            headerRuns.add(headerName);
+            heelerRuns.add(heelerName);
+            //System.out.println("Added " + headerName + " and " + heelerName);
+        }
+        int numOfEntries = Collections.frequency(positionDraw2, roperName) + Collections.frequency(positionDraw3, roperName);
+        System.out.println(roperName + " is in draw 2 " + Collections.frequency(positionDraw2, roperName) + " time and draw 3 " +
+                Collections.frequency(positionDraw3, roperName) + " times.");
+        if(positionName == "heeler") {
+            //if we're here, it means the heelerlist was bigger. We're looping the headerDrawX arrays and trying to remove from heelerNames
+            if(numOfEntries == 1) {
+                System.out.println("In there once, with " + Collections.frequency(heelerRuns, roperName) + " current runs.");
+                if (Collections.frequency(heelerRuns, roperName) == 3) {
                     System.out.println(roperName + " has three runs. Removing from array.");
                     positionNames.remove(roperName);
                     //System.out.println("Position names: " + positionNames);
                 }
             }
-            if(Collections.frequency(positionDrawX, roperName) == 2) {
+            if(numOfEntries == 2) {
                 System.out.println("In there twice.");
                 if(Collections.frequency(heelerRuns, roperName) == 6) {
                     System.out.println(roperName + " has six runs. Removing from array.");
                     positionNames.remove(roperName);
                 }
             }
-
-
         }
         if(positionName == "header") {
             //if we're here, it means the headerlist was bigger. We're looping the heelerDrawX arrays and trying to remove from headerNames
-            if(Collections.frequency(headerRuns, roperName) == 3) {
-                positionNames.remove(roperName);
+            if(numOfEntries == 1) {
+                System.out.println("In there once, with " + Collections.frequency(headerRuns, roperName) + " current runs.");
+                if(Collections.frequency(headerRuns, roperName) == 3) {
+                    System.out.println(roperName + " has three runs. Removing from array.");
+                    positionNames.remove(roperName);
+                    //System.out.println("Position names: " + positionNames);
+                }
+            }
+            if(numOfEntries == 2) {
+                System.out.println("In there twice.");
+                if(Collections.frequency(headerRuns, roperName) == 6) {
+                    System.out.println(roperName + " has six runs. Removing from array.");
+                    positionNames.remove(roperName);
+                }
             }
         }
 
     }
 
 
-    public static void attemptRemovalDeprecated2(String pairName, String positionName, ArrayList positionNames, ArrayList draw2, ArrayList draw3,
-                                      ArrayList partnerList) {
-        ArrayList headerRuns = new ArrayList();
-        ArrayList heelerRuns = new ArrayList();
-        for (int i = 0; i < partnerList.size(); i++) {
-            String[] splitNames = partnerList.get(i).toString().split("\\s+");
-            String headerName = splitNames[0] + " " + splitNames[1] + " " + splitNames[2];
-            String heelerName = splitNames[3] + " " + splitNames[4] + " " + splitNames[5];
-            headerRuns.add(headerName);
-            heelerRuns.add(heelerName);
-            //System.out.println("Added " + headerName + " and " + heelerName);
-        }
-        String[] splitNames = pairName.split("\\s+");
-        String headerName = splitNames[0] + " " + splitNames[1] + " " + splitNames[2];
-        String heelerName = splitNames[3] + " " + splitNames[4] + " " + splitNames[5];
-        if (positionName == "heeler") {
-            positionName = heelerName;
-            System.out.println("Frequency of " + positionName + " in draw2 is " + Collections.frequency(draw2, positionName) + " and draw 3 is " +
-                    Collections.frequency(draw3, positionName));
-            if (Collections.frequency(draw2, positionName) == 2 || Collections.frequency(draw3, positionName) == 2) {
-                System.out.println(positionName + " was in Draw2 twice, so he gets six heads");
-                if (Collections.frequency(heelerRuns, heelerName) == 6) {
-                    System.out.println(heelerName + " has six entries, remove from list.");
-                    positionNames.remove(positionName);
-                }
-            } else {
-                //they get three entries
-                System.out.println(heelerName + " was in Draw2 once, so he gets 3 heads");
-                if (Collections.frequency(heelerRuns, positionName) == 3) {
-                    System.out.println(positionName + " has 3 entries, remove from list.");
-                    positionNames.remove(positionName);
-                }
-            }
-        }
-        if (positionName == "header") {
-            positionName = headerName;
-            System.out.println("Frequency of " + positionName + " in draw2 is " + Collections.frequency(draw2, positionName) + " and draw 3 is " +
-                    Collections.frequency(draw3, positionName));
-            if (Collections.frequency(draw2, positionName) == 2 || Collections.frequency(draw3, positionName) == 2) {
-                System.out.println(positionName + " was in Draw2 twice, so he gets six heads");
-                if (Collections.frequency(headerRuns, headerName) == 6) {
-                    System.out.println(headerName + " has six entries, remove from list.");
-                    positionNames.remove(positionName);
-                }
-            } else {
-                //they get three entries
-                System.out.println(headerName + " was in Draw2 once, so he gets 3 heads");
-                if (Collections.frequency(headerRuns, positionName) == 3) {
-                    System.out.println(positionName + " has 3 entries, remove from list.");
-                    positionNames.remove(positionName);
-                }
-            }
-        }
-    }
 
 
-
-    public static void attemptRemovalDeprecated(String pairName, ArrayList headerNames, ArrayList heelerNames, ArrayList headerDraw2, ArrayList headerDraw3,
-                                                ArrayList heelerDraw2, ArrayList heelerDraw3, ArrayList partnerList) {
-        ArrayList headerRuns = new ArrayList();
-        ArrayList heelerRuns = new ArrayList();
-        for(int i = 0; i < partnerList.size(); i++) {
-            String[] splitNames = partnerList.get(i).toString().split("\\s+");
-            String headerName = splitNames[0] + " " + splitNames[1] + " " + splitNames[2];
-            String heelerName = splitNames[3] + " " + splitNames[4] + " " + splitNames[5];
-            headerRuns.add(headerName);
-            heelerRuns.add(heelerName);
-            //System.out.println("Added " + headerName + " and " + heelerName);
-        }
-        String[] splitNames = pairName.split("\\s+");
-        String headerName = splitNames[0] + " " + splitNames[1] + " " + splitNames[2];
-        String heelerName = splitNames[3] + " " + splitNames[4] + " " + splitNames[5];
-        if (headerNames.size() > heelerNames.size()) {
-            System.out.println("Frequency of " + headerName + " in draw2 is " + Collections.frequency(headerDraw2, headerName) + " and draw 3 is " +
-                    Collections.frequency(headerDraw3, headerName));
-            //more headers than heelers. Now check if they should have 3 or 6 header entries
-            if (Collections.frequency(headerDraw2, headerName) == 2 || Collections.frequency(headerDraw3, headerName) == 2) {
-                System.out.println(headerName + " was in headerDraw2 twice, so he gets six heads");
-                if (Collections.frequency(headerRuns, headerName) == 6) {
-                    System.out.println(headerName + " has six entries, remove from list.");
-                    headerNames.remove(headerName);
-                }
-            } else {
-                //they get three entries
-                System.out.println(headerName + " was in headerDraw2 once, so he gets 3 heads");
-                if (Collections.frequency(headerRuns, headerName) == 3) {
-                    System.out.println(headerName + " has 3 entries, remove from list.");
-                    headerNames.remove(headerName);
-                }
-            }
-        }
-        if(heelerNames.size() > headerNames.size()) {
-            System.out.println("Frequency of " + heelerName + " in draw2 is " + Collections.frequency(heelerDraw2, heelerName) + " and draw 3 is " +
-                    Collections.frequency(heelerDraw3, heelerName));
-            //heeler name list was bigger
-            if (Collections.frequency(heelerDraw2, heelerName) == 2 || Collections.frequency(heelerDraw3, heelerName) == 2) {
-                System.out.println(heelerName + " was in heelerDraw2 or 3 twice, so he gets six heels. Currently at "
-                        + Collections.frequency(heelerRuns, heelerName));
-                if (Collections.frequency(heelerRuns, heelerName) == 6) {
-                    System.out.println(heelerName + " has six entries, remove from list. " + Collections.frequency(heelerRuns, heelerName));
-                    heelerNames.remove(heelerName);
-                }
-            } else {
-                //they get three entries
-                System.out.println(heelerName + " was in heelerDraw2 once, so he gets 3 heels. Currently at " + Collections.frequency(heelerRuns, heelerName));
-                if (Collections.frequency(heelerRuns, heelerName) == 3) {
-                    System.out.println(heelerName + " has 3 entries, remove from list. " + Collections.frequency(heelerRuns, heelerName));
-                    heelerNames.remove(heelerName);
-                }
-            }
-        } else {
-            //arrays are same size, might need this for something
-            System.out.println("Arrays same size.");
-            System.out.println("Frequency of " + headerName + " in draw2 is " + Collections.frequency(headerDraw2, headerName) + " and draw 3 is " +
-                    Collections.frequency(headerDraw3, headerName));
-            //more headers than heelers. Now check if they should have 3 or 6 header entries
-            if (Collections.frequency(headerDraw2, headerName) == 2 || Collections.frequency(headerDraw3, headerName) == 2) {
-                System.out.println(headerName + " was in headerDraw2 twice, so he gets six heads");
-                if (Collections.frequency(headerRuns, headerName) == 6) {
-                    System.out.println(headerName + " has six entries, remove from list.");
-                    headerNames.remove(headerName);
-                }
-            } else {
-                //they get three entries
-                System.out.println(headerName + " was in headerDraw2 once, so he gets 3 heads");
-                if (Collections.frequency(headerRuns, headerName) == 3) {
-                    System.out.println(headerName + " has 3 entries, remove from list.");
-                    headerNames.remove(headerName);
-                }
-            }
-        }
-    }
 
 
 
