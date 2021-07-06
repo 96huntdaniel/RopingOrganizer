@@ -48,14 +48,14 @@ public class ExcelWriter {
                 = new TreeMap<String, Object[]>();
 
         roperData.put(
-                "1",
+                "0",
                 new Object[] { "Number", "Header", "Heeler" });
 
         for(int i = 0; i < partnerData.size(); i++) {
             String[] splitNames = partnerData.get(i).toString().split("\\s+");
             String headerName = splitNames[0] + " " + splitNames[1];
             String heelerName = splitNames[3] + " " + splitNames[4];
-            roperData.put(String.valueOf(i), new Object[] {String.valueOf(i-1), headerName, heelerName});
+            roperData.put(String.valueOf(i+1), new Object[] {String.valueOf(i), headerName, heelerName});
         }
 
         Set<String> keyid = roperData.keySet();

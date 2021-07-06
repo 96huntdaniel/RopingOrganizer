@@ -218,7 +218,7 @@ public class ExcelReader {
                     }
                 }
                 System.out.println("HEADER DRAW 2");
-                int attempts = 1000;
+                int attempts = 10000;
                     while (heelerNames.size() > 0) {
                         if(attempts < 1) {
                             System.out.println("BREAKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -375,7 +375,7 @@ public class ExcelReader {
                         }
                     }
                     System.out.println("HEELER DRAW 2");
-                    int attempts = 1000;
+                    int attempts = 10000;
                     while (heelerNames.size() > 0) {
                         if (attempts < 1) {
                             System.out.println("BREAKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
