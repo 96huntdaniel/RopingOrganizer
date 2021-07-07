@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
+    }
+}
+
 plugins {
     id 'groovy'
     id 'java'
@@ -8,6 +17,9 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://artifact.aspose.com/repo/'
+    }
 }
 
 dependencies {
@@ -18,7 +30,22 @@ dependencies {
     implementation 'org.apache.poi:ooxml-schemas:1.4'
     implementation 'org.apache.poi:poi:5.0.0'
     implementation 'xmlbeans:xmlbeans:2.3.0'
+    compile group: 'com.aspose', name: 'aspose-words', version: "18.9", classifier: 'jdk16'
 
     compile 'org.apache.poi:poi-ooxml:5.0.0'
 }
+
+jar {
+    manifest {
+        baseName = 'RopingOrganizer'
+        attributes(
+                'Main-Class': 'ExcelReader'
+        )
+    }
+}
+
+
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
 
