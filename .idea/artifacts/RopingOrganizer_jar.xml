@@ -66,6 +66,8 @@
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.xmlgraphics/batik-gvt/1.13/e324b1b5bb23649c67579b8c2ee45f33de42e539/batik-gvt-1.13.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi-ooxml-full/5.0.0/d846474f2f284879564dd6a00030af7e2d0b0b81/poi-ooxml-full-5.0.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.xmlgraphics/batik-ext/1.13/ea55108b070051c5440613cfbbe91414010d183e/batik-ext-1.13.jar" path-in-jar="/" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/GBKArena-LogoHorizontal-PRINT.jpeg" />
     </root>
   </artifact>
 </component>

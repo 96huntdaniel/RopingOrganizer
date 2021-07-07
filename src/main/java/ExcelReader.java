@@ -1,3 +1,4 @@
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -12,7 +13,7 @@ import java.util.*;
 import static org.apache.poi.ss.usermodel.CellType.*;
 
 public class ExcelReader {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InvalidFormatException {
         ArrayList partners = new ArrayList();
         ArrayList headerNames = new ArrayList();
         ArrayList heelerNames = new ArrayList();
@@ -20,6 +21,7 @@ public class ExcelReader {
         ArrayList heelerDraw2 = new ArrayList();
         ArrayList headerDraw3 = new ArrayList();
         ArrayList heelerDraw3 = new ArrayList();
+        float maxRank = (float) 9.5;
         File myFile = new File(System.getProperty("user.dir"), "InputWorkbook.xlsx");
         System.out.println("File: " + myFile);
         FileInputStream fis = null;
@@ -48,6 +50,8 @@ public class ExcelReader {
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
             if (row.getRowNum() == 0) {
+                maxRank = Float.valueOf(String.valueOf(row.getCell(8)));
+                System.out.println("Max Rank: " + row.getCell(8).toString());
                 //let's skip our workbook header
                 continue;
             }
@@ -94,22 +98,27 @@ public class ExcelReader {
         //System.out.println("-----");
         //System.out.println(heelerNames);
         //remove the excel sheet header row real quick
+        headerDraw3 = ArraySorter.sortArray(headerDraw3, "rank");
+        headerDraw2 = ArraySorter.sortArray(headerDraw2, "rank");
+        heelerDraw3 = ArraySorter.sortArray(heelerDraw3, "rank");
+        heelerDraw2 = ArraySorter.sortArray(heelerDraw2, "rank");
         System.out.println("Header Draw 2: " + headerDraw2);
         System.out.println("Header Draw 3: " + headerDraw3);
         System.out.println("Heeler Draw 2: " + heelerDraw2);
         System.out.println("Heeler Draw 3: " + heelerDraw3);
 
-        partners = generatePartners(headerDraw2, headerDraw3, heelerDraw2, heelerDraw3, headerNames, heelerNames, partners);
+        partners = generatePartners(headerDraw2, headerDraw3, heelerDraw2, heelerDraw3, headerNames, heelerNames, partners, maxRank);
         for (Object partner : partners) {
             System.out.println(partner.toString());
         }
 
         ExcelWriter.populateEntries(partners);
+        WordWriter.generatePrintoff(partners, headerDraw2, headerDraw3, heelerDraw2, heelerDraw3);
 
     }
 
     public static ArrayList<String> generatePartners(ArrayList headerDraw2, ArrayList headerDraw3, ArrayList heelerDraw2, ArrayList heelerDraw3, ArrayList headerNames,
-                                                     ArrayList heelerNames, ArrayList partners) {
+                                                     ArrayList heelerNames, ArrayList partners, float maxRank) {
         //function to take our draw 2 and draw 3 arrays and pair everyone up
 
         if (headerNames.size() < heelerNames.size()) {
@@ -125,8 +134,8 @@ public class ExcelReader {
                             if (partners.contains(headerDraw2.get(i).toString() + " " + partner)) {
                                 System.out.println("Tried to add... " + headerDraw2.get(i).toString() + " " + partner + " but that entry already exists.");
                                 //continue;
-                            } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
-                                System.out.println("Tried " + headerDraw2.get(i).toString() + " " + partner + " which exceeds 9.5");
+                            } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
+                                System.out.println("Tried " + headerDraw2.get(i).toString() + " " + partner + " which exceeds " + maxRank);
                                 //continue;
                             } else if (partner.equals(headerDraw2.get(i).toString())) {
                                 System.out.println("Same person, trying again. Tried " + headerDraw2.get(i).toString() + " and " + partner);
@@ -164,8 +173,8 @@ public class ExcelReader {
                                         System.out.println("Tried to add... " + headerDraw3.get(i).toString() + " " + partner + " but that entry already exists.");
                                         //continue;
                                         attempts --;
-                                    } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
-                                        System.out.println("Tried " + headerDraw3.get(i).toString() + " " + partner + " which exceeds 9.5");
+                                    } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
+                                        System.out.println("Tried " + headerDraw3.get(i).toString() + " " + partner + " which exceeds " + maxRank);
                                         //continue;
                                         attempts --;
                                     } else if (partner.equals(headerDraw3.get(i).toString())) {
@@ -199,8 +208,8 @@ public class ExcelReader {
                             if (partners.contains(headerDraw3.get(i).toString() + " " + partner)) {
                                 System.out.println("Tried to add... " + headerDraw3.get(i).toString() + " " + partner + " but that entry already exists.");
                                 //continue;
-                            } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
-                                System.out.println("Tried " + headerDraw3.get(i).toString() + " " + partner + " which exceeds 9.5");
+                            } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
+                                System.out.println("Tried " + headerDraw3.get(i).toString() + " " + partner + " which exceeds " + maxRank);
                                 //continue;
                             } else if (partner.equals(headerDraw3.get(i).toString())) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + headerDraw3.get(i).toString());
@@ -239,8 +248,8 @@ public class ExcelReader {
                                         }
                                         //continue;
 
-                                    } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
-                                        System.out.println("Tried " + headerDraw2.get(i).toString() + " " + partner + " which exceeds 9.5");
+                                    } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
+                                        System.out.println("Tried " + headerDraw2.get(i).toString() + " " + partner + " which exceeds " + maxRank);
                                         //continue;
                                         attempts--;
                                         if(attempts < 1) {
@@ -253,7 +262,7 @@ public class ExcelReader {
                                         if(attempts < 1) {
                                             break;
                                         }
-                                    } else if(isMaxRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners) && heelerNames.size() > 1) {
+                                    } else if(isMaxRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners) && j < heelerNames.size()-1) {
                                         System.out.println("This person has reached their max runs. Trying again.");
                                         attempts--;
                                     }else {
@@ -286,8 +295,8 @@ public class ExcelReader {
                             if (partners.contains(partner + " " + heelerDraw2.get(i).toString())) {
                                 System.out.println("Tried to add... " + partner + " " + heelerDraw2.get(i).toString() + " but that entry already exists.");
                                 //continue;
-                            } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
-                                System.out.println("Tried " + partner + " " + heelerDraw2.get(i).toString() + " which exceeds 9.5");
+                            } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
+                                System.out.println("Tried " + partner + " " + heelerDraw2.get(i).toString() + " which exceeds " + maxRank);
                                 //continue;
                             } else if (partner.equals(heelerDraw2.get(i).toString())) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw2.get(i).toString());
@@ -323,8 +332,8 @@ public class ExcelReader {
                         if (partners.contains(partner + " " + heelerDraw3.get(i).toString())) {
                             System.out.println("Tried to add... " + partner + " " + heelerDraw3.get(i).toString() + " but that entry already exists.");
                            attempts--;
-                        } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
-                            System.out.println("Tried " + partner + " " + heelerDraw3.get(i).toString() + " which exceeds 9.5");
+                        } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
+                            System.out.println("Tried " + partner + " " + heelerDraw3.get(i).toString() + " which exceeds " + maxRank);
                            attempts--;
                         } else if (partner.equals(heelerDraw3.get(i).toString())) {
                             System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw3.get(i).toString());
@@ -357,8 +366,8 @@ public class ExcelReader {
                             if (partners.contains(partner + " " + heelerDraw3.get(i).toString())) {
                                 System.out.println("Tried to add... " + partner + " " + heelerDraw3.get(i).toString() + " but that entry already exists.");
                                 //continue;
-                            } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
-                                System.out.println("Tried " + partner + " " + heelerDraw3.get(i).toString() + " which exceeds 9.5");
+                            } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
+                                System.out.println("Tried " + partner + " " + heelerDraw3.get(i).toString() + " which exceeds " + maxRank);
                                 //continue;
                             } else if (partner.equals(heelerDraw3.get(i).toString())) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw3.get(i).toString());
@@ -391,8 +400,8 @@ public class ExcelReader {
                                     if (partners.contains(partner + " " + heelerDraw2.get(i).toString())) {
                                         System.out.println("Tried to add... " + partner + " " + heelerDraw2.get(i).toString() + " but that entry already exists.");
                                         attempts--;
-                                    } else if (Float.parseFloat(rank1) + rank2 > 9.5) {
-                                        System.out.println("Tried " + partner + " " + heelerDraw2.get(i).toString() + " which exceeds 9.5");
+                                    } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
+                                        System.out.println("Tried " + partner + " " + heelerDraw2.get(i).toString() + " which exceeds " + maxRank);
                                         attempts--;
                                     } else if (partner.equals(heelerDraw2.get(i).toString())) {
                                         System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw2.get(i).toString());

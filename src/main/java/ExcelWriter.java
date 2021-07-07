@@ -49,13 +49,14 @@ public class ExcelWriter {
 
         roperData.put(
                 "0",
-                new Object[] { "Number", "Header", "Heeler" });
+                new Object[] { "Number", "Header", "Heeler", "Total Rank" });
 
         for(int i = 0; i < partnerData.size(); i++) {
             String[] splitNames = partnerData.get(i).toString().split("\\s+");
             String headerName = splitNames[0] + " " + splitNames[1];
             String heelerName = splitNames[3] + " " + splitNames[4];
-            roperData.put(String.valueOf(i+1), new Object[] {String.valueOf(i), headerName, heelerName});
+            String totalRank = String.valueOf(Float.valueOf(splitNames[2]) + Float.valueOf(splitNames[5]));
+            roperData.put(String.valueOf(i+1), new Object[] {String.valueOf(i), headerName, heelerName, totalRank});
         }
 
         Set<String> keyid = roperData.keySet();
