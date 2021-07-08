@@ -25,6 +25,7 @@ public class ArraySorter {
             if(sortField.equals("firstName")) {
                 tempArray.add(firstName + " " + lastName + " " + rank);
             }
+
         }
 
         Collections.sort(tempArray, String.CASE_INSENSITIVE_ORDER);

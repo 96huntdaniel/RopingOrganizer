@@ -5,10 +5,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 
 public class ExcelWriter {
@@ -49,14 +46,16 @@ public class ExcelWriter {
 
         roperData.put(
                 "0",
-                new Object[] { "Number", "Header", "Heeler", "Total Rank" });
+                new Object[] { "Header", "Heeler", "Total Rank", "Team Number" });
 
+        Collections.shuffle(partnerData);
         for(int i = 0; i < partnerData.size(); i++) {
             String[] splitNames = partnerData.get(i).toString().split("\\s+");
             String headerName = splitNames[0] + " " + splitNames[1];
             String heelerName = splitNames[3] + " " + splitNames[4];
+            String teamNumber = splitNames[6];
             String totalRank = String.valueOf(Float.valueOf(splitNames[2]) + Float.valueOf(splitNames[5]));
-            roperData.put(String.valueOf(i+1), new Object[] {String.valueOf(i), headerName, heelerName, totalRank});
+            roperData.put(String.valueOf(i+1), new Object[] {headerName, heelerName, totalRank, teamNumber});
         }
 
         Set<String> keyid = roperData.keySet();
