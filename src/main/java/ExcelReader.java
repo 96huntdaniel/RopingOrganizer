@@ -112,6 +112,11 @@ public class ExcelReader {
             System.out.println(partner.toString());
         }
 
+        Collections.shuffle(partners);
+        for(int i = 0; i < partners.size(); i++) {
+            //attach team number to partners
+            partners.set(i, String.valueOf(partners.get(i) + " " + Integer.valueOf(i+1)));
+        }
         ExcelWriter.populateEntries(partners);
         WordWriter.generatePrintoff(partners, headerDraw2, headerDraw3, heelerDraw2, heelerDraw3);
 

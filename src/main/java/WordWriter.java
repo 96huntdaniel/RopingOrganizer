@@ -32,7 +32,7 @@ public class WordWriter {
 
 
       ArrayList allEntries = new ArrayList();
-
+        Collections.shuffle(partnerData);
         for(int j = 0; j < partnerData.size(); j++) {
             String[] splitNames = partnerData.get(j).toString().split("\\s+");
             String headerName = splitNames[0] + " " + splitNames[1] + " " + splitNames[2];
@@ -105,7 +105,7 @@ public class WordWriter {
             String heelerName = splitNames[3] + " " + splitNames[4] + " " + splitNames[5];
             if(headerName.equals(roperName)) {
                 //they're heading for this heeler!
-                headingForNames.add(heelerName);
+                headingForNames.add(heelerName  + " | Team #" + splitNames [6]);
             }
         }
         return headingForNames;
@@ -118,7 +118,7 @@ public class WordWriter {
             String heelerName = splitNames[3] + " " + splitNames[4] + " " + splitNames[5];
             if(heelerName.equals(roperName)) {
                 //they're heeling for this header!
-                heelingForNames.add(headerName);
+                heelingForNames.add(headerName + " | Team #" + splitNames [6]);
             }
         }
         return heelingForNames;
