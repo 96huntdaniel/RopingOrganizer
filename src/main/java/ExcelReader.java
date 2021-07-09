@@ -494,12 +494,15 @@ public class ExcelReader {
     public static ArrayList cleanup(String cleanupFor, ArrayList totalRuns, ArrayList heelerDraw2, ArrayList heelerDraw3,
                                     ArrayList headerDraw2, ArrayList headerDraw3, float maxRank,
                                     ArrayList headerNames, ArrayList heelerNames, ArrayList partners) {
-
+        System.out.println("CLEANUP--------------------------");
         ArrayList maxRunDraw2 = new ArrayList(); //set this to opposite of your cleanupFor
         ArrayList maxRunDraw3 = new ArrayList(); //set this to opposite of your cleanupFor
         ArrayList cloneArray = new ArrayList(); //set this to cleanupFor.clone(); ex: heelerDraw2 would be heelerDraw2.clone();
         ArrayList maxRunNames = new ArrayList(); //set this to the opposite of your cleanUpFor names
+        int currentMaxExtras = 0; //keep track of the current highest number of extra runs anyone has
         String isMaxPositionName = new String(); //set this to be opposite of your cleanUpFor position, ex: heelerDraw2 would be "header"
+        String getExtrasPosition = null;
+        ArrayList extraRunsArray = new ArrayList();
         if(cleanupFor.equals("heelerDraw2")) {
             //coming here from a case where we did heeler draw 3, then heeler draw 2. cleaning up now
             maxRunDraw2 = headerDraw2;
@@ -507,6 +510,7 @@ public class ExcelReader {
             cloneArray = (ArrayList) heelerDraw2.clone();
             maxRunNames = headerNames;
             isMaxPositionName = "header";
+            getExtrasPosition = "heeler";
         }
         if(cleanupFor.equals("heelerDraw3")) {
             maxRunDraw2 = headerDraw2;
@@ -514,6 +518,7 @@ public class ExcelReader {
             cloneArray = (ArrayList) heelerDraw3.clone();
             maxRunNames = headerNames;
             isMaxPositionName = "header";
+            getExtrasPosition = "heeler";
         }
         if(cleanupFor.equals("headerDraw2")) {
             maxRunDraw2 = heelerDraw2;
@@ -521,6 +526,7 @@ public class ExcelReader {
             cloneArray = (ArrayList) headerDraw2.clone();
             maxRunNames = heelerNames;
             isMaxPositionName = "heeler";
+            getExtrasPosition = "header";
         }
         if(cleanupFor.equals("headerDraw3")) {
             maxRunDraw2 = heelerDraw2;
@@ -528,6 +534,7 @@ public class ExcelReader {
             cloneArray = (ArrayList) headerDraw3.clone();
             maxRunNames = heelerNames;
             isMaxPositionName = "heeler";
+            getExtrasPosition = "header";
         }
         for(int x = 0; x < totalRuns.size(); x++) {
             //cleaning up
@@ -549,46 +556,72 @@ public class ExcelReader {
             }
             int runsNeeded = maxRuns - Collections.frequency(allEntries, totalRuns.get(x));
             System.out.println(totalRuns.get(x) + "'s runs needed is " + runsNeeded);
+            ArrayList tempArray = (ArrayList) cloneArray.clone();
             for (int y = 0; y < runsNeeded; y++) {
-                int attempts = 10;
+                int attempts = 10000;
                 //System.out.println(" 1 Total runs: " + totalRuns);
-                ArrayList tempArray = (ArrayList) cloneArray.clone();
                 String rank1 = totalRuns.get(x).toString().substring(totalRuns.get(x).toString().length() - 3);
                 while (true) {
                     if (tempArray.size() < 1) {
                         break;
                     }
-                    //System.out.println(" 1 Total runs: " + totalRuns);
-                    //System.out.println("Trying to get " + totalRuns.get(x).toString() + "'s " + x + " run.");
                     System.out.println(tempArray);
-                    //System.out.println(tempArray);
                     String partner = getRandomPartner(tempArray);
+                    System.out.println(totalRuns.get(x).toString() + " picking from " + tempArray);
+
                     String partnerEntry = null;
                     if(isMaxPositionName.equals("header")) {
+                        if(getNumberOfExtraRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners) > currentMaxExtras) {
+                            //System.out.println("At least we got here");
+                            currentMaxExtras = getNumberOfExtraRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners);
+                            //System.out.println("Their number of extras is " + getNumberOfExtraRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners)
+                                   // + " and the current is " + currentMaxExtras);
+                        }
                         //if you're pulling a header, your partner should go first
                         partnerEntry = totalRuns.get(x).toString() + " " + partner;
                         System.out.println("Partner entry: " + partnerEntry);
                     }
+
                     if(isMaxPositionName.equals("heeler")) {
+                        //System.out.println(partner + " 's extra runs are " + getNumberOfExtraRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners));
+                        if(getNumberOfExtraRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners) > currentMaxExtras) {
+                            System.out.println("At least we got here");
+                            currentMaxExtras = getNumberOfExtraRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners);
+                            //System.out.println("Their number of extras is " + getNumberOfExtraRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners)
+                                    //+ " and the current is " + currentMaxExtras);
+                        }
                         partnerEntry = partner + " " + totalRuns.get(x).toString();
                     }
+                    //System.out.println("We will be checking " + getNumberOfExtraRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners) + " against " + currentMaxExtras);
                     float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                     if (partners.contains(partnerEntry)) {
-                        //System.out.println("Tried to add... " + partner + " " + totalRuns.get(x).toString() + " but that entry already exists.");
+                        System.out.println("Tried to add... " + partner + " " + totalRuns.get(x).toString() + " but that entry already exists.");
                         tempArray.remove(partner);
                     } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
-                        //System.out.println("Tried " + partner + " " + totalRuns.get(x).toString() + " which exceeds " + maxRank + " with " + attempts + " attempts left");
+                        System.out.println("Tried " + partner + " " + totalRuns.get(x).toString() + " which exceeds " + maxRank + " with " + attempts + " attempts left");
                         tempArray.remove(partner);
+                        attempts--;
                     } else if (partner.equals(totalRuns.get(x).toString())) {
-                        //System.out.println("Same person, trying again. Tried " + partner + " and " + totalRuns.get(x).toString() + " with " + attempts + " attempts left");
+                        System.out.println("Same person, trying again. Tried " + partner + " and " + totalRuns.get(x).toString() + " with " + attempts + " attempts left");
                         tempArray.remove(partner);
-                    } else if (isMaxRuns((String) maxRunNames.get(x), isMaxPositionName, maxRunNames, maxRunDraw2, maxRunDraw3, partners) && attempts > 10) {
+                        attempts--;
+                    } else if(Collections.frequency(extraRunsArray, partner) == Collections.frequency(extraRunsArray,ArraySorter.mostCommon(extraRunsArray)) && !extraRunsArray.isEmpty() && attempts > 10) {
+                        //they have more than the current max extras
+                        //System.out.println(partner + "'s frequency is " + Collections.frequency(extraRunsArray, partner) + " and the most common is " +
+                        //        ArraySorter.mostCommon(extraRunsArray) + " with " + Collections.frequency(extraRunsArray,ArraySorter.mostCommon(extraRunsArray)));
+                        System.out.println(partner + " had too many extras, removing");
+                        //tempArray.remove(partner);
+                        attempts--;
+
+                    } else if (isMaxRuns((String) maxRunNames.get(x), isMaxPositionName, maxRunNames, maxRunDraw2, maxRunDraw3, partners) && attempts > 10000) {
                         //System.out.println("Hit max run check. i is " + i + " and headerNames.size()-1 is " + Integer.valueOf(headerNames.size()-1));
                         //System.out.println("This person has reached their max runs. Trying again." + " with " + attempts + " attempts left");
                         //totalRuns.remove(partner);
+                        attempts--;
                     } else {
                         System.out.println("Valid response. Adding " + partnerEntry);
                         partners.add(partnerEntry);
+                        extraRunsArray.add(partner);
                         tempArray.remove(partner);
                         break;
                     }
@@ -599,63 +632,6 @@ public class ExcelReader {
         return partners;
     }
 
-    public static ArrayList heelerDraw2CleanUp(ArrayList totalRuns, ArrayList heelerDraw2, ArrayList headerDraw2,
-                                    ArrayList headerDraw3, float maxRank, ArrayList headerNames, ArrayList partners ) {
-        ArrayList partnerData = new ArrayList();
-        for(int x = 0; x < totalRuns.size(); x++) {
-            //cleaning up headers for heeler draw 2
-            int maxRuns = Collections.frequency(headerDraw2, totalRuns.get(x)) + Collections.frequency(headerDraw3, totalRuns.get(x));
-            maxRuns *= 3;
-            System.out.println(totalRuns.get(x) + "'s max runs is " + maxRuns);
-            ArrayList allEntries = new ArrayList();
-
-            for (int j = 0; j < partners.size(); j++) {
-                String[] splitNames = partners.get(j).toString().split("\\s+");
-                String headerName = splitNames[0] + " " + splitNames[1] + " " + splitNames[2];
-                String heelerName = splitNames[3] + " " + splitNames[4] + " " + splitNames[5];
-                allEntries.add(headerName);
-            }
-            int runsNeeded = maxRuns - Collections.frequency(allEntries, totalRuns.get(x));
-            System.out.println(totalRuns.get(x) + "'s runs needed is " + runsNeeded);
-            for (int y = 0; y < runsNeeded; y++) {
-                int attempts = 10;
-                System.out.println(" 1 Total runs: " + totalRuns);
-                ArrayList tempArray = (ArrayList) heelerDraw2.clone();
-                String rank1 = totalRuns.get(x).toString().substring(totalRuns.get(x).toString().length() - 3);
-                while (true) {
-                    if (tempArray.size() < 1) {
-                        break;
-                    }
-                    System.out.println(" 1 Total runs: " + totalRuns);
-                    //System.out.println("Trying to get " + totalRuns.get(x).toString() + "'s " + x + " run.");
-                    System.out.println(tempArray);
-                    //System.out.println(tempArray);
-                    String partner = getRandomPartner(tempArray);
-                    float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
-                    if (partners.contains(totalRuns.get(x).toString() + " " + partner)) {
-                        //System.out.println("Tried to add... " + partner + " " + totalRuns.get(x).toString() + " but that entry already exists.");
-                        tempArray.remove(partner);
-                    } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
-                        //System.out.println("Tried " + partner + " " + totalRuns.get(x).toString() + " which exceeds " + maxRank + " with " + attempts + " attempts left");
-                        tempArray.remove(partner);
-                    } else if (partner.equals(totalRuns.get(x).toString())) {
-                        //System.out.println("Same person, trying again. Tried " + partner + " and " + totalRuns.get(x).toString() + " with " + attempts + " attempts left");
-                        tempArray.remove(partner);
-                    } else if (isMaxRuns((String) headerNames.get(x), "header", headerNames, headerDraw2, headerDraw3, partners) && attempts > 10) {
-                        //System.out.println("Hit max run check. i is " + i + " and headerNames.size()-1 is " + Integer.valueOf(headerNames.size()-1));
-                        //System.out.println("This person has reached their max runs. Trying again." + " with " + attempts + " attempts left");
-                        //totalRuns.remove(partner);
-                    } else {
-                        System.out.println("Valid response. Adding " + partner + " " + totalRuns.get(x).toString());
-                        partners.add(totalRuns.get(x) + " " + partner);
-                        tempArray.remove(partner);
-                        break;
-                    }
-                }
-            }
-        }
-        return partners;
-    }
     public static String getRandomPartner(ArrayList positionNames) {
         int index = (int) (Math.random() * positionNames.size());
         String partner = (String) positionNames.get(index);
@@ -718,6 +694,61 @@ public class ExcelReader {
             }
         }
         return false;
+    }
+
+    public static int getNumberOfExtraRuns(String roperName, String positionName, ArrayList positionNames, ArrayList positionDraw2,
+                                    ArrayList positionDraw3, ArrayList partnerList) {
+        int numberOfExtras = 0;
+        ArrayList headerRuns = new ArrayList();
+        ArrayList heelerRuns = new ArrayList();
+        for (int i = 0; i < partnerList.size(); i++) {
+            String[] splitNames = partnerList.get(i).toString().split("\\s+");
+            String headerName = splitNames[0] + " " + splitNames[1] + " " + splitNames[2];
+            String heelerName = splitNames[3] + " " + splitNames[4] + " " + splitNames[5];
+            headerRuns.add(headerName);
+            heelerRuns.add(heelerName);
+            //System.out.println("Added " + headerName + " and " + heelerName);
+        }
+        int numOfEntries = Collections.frequency(positionDraw2, roperName) + Collections.frequency(positionDraw3, roperName);
+        //System.out.println("getNoExtras log: Name: " + roperName + " numOfEntries: " + numOfEntries + " positon name: " + positionName);
+        //System.out.println(roperName + " is in draw 2 " + Collections.frequency(positionDraw2, roperName) + " time and draw 3 " +
+                //Collections.frequency(positionDraw3, roperName) + " times.");
+        if(positionName.equals("heeler")) {
+            //if we're here, it means the heelerlist was bigger. We're looping the headerDrawX arrays and trying to remove from heelerNames
+            if(numOfEntries == 1) {
+                //System.out.println("Should have three total runs.");
+                numberOfExtras = Collections.frequency(heelerRuns, roperName) - 3;
+                //System.out.println("Math is:  " + roperName + " " + Integer.valueOf(Collections.frequency(heelerRuns, roperName) - 3));
+                    return numberOfExtras;
+            }
+            if(numOfEntries == 2) {
+                //System.out.println("Should have six.");
+                numberOfExtras = Collections.frequency(heelerRuns, roperName) - 6;
+                    //System.out.println(roperName + " has six runs. Removing from array.");
+                //System.out.println("Math is:  " + roperName + " " + Integer.valueOf(Collections.frequency(heelerRuns, roperName) - 3));
+                    return numberOfExtras;
+                }
+            }
+        if(positionName.equals("header")) {
+            //System.out.println("They're a header");
+            if(numOfEntries == 1) {
+                //System.out.println("Should have three total runs.");
+                numberOfExtras = Collections.frequency(headerRuns, roperName) - 3;
+                //System.out.println("Math is:  " + roperName + " " + Integer.valueOf(Collections.frequency(headerRuns, roperName) - 3));
+                return numberOfExtras;
+            }
+            if(numOfEntries == 2) {
+                //System.out.println("Should have six.");
+                numberOfExtras = Collections.frequency(headerRuns, roperName) - 6;
+                //System.out.println(roperName + " has six runs. Removing from array.");
+                //System.out.println("Math is:  " + roperName + " " + Integer.valueOf(Collections.frequency(headerRuns, roperName) - 3));
+                return numberOfExtras;
+            }
+        }
+        else {
+            return numberOfExtras;
+        }
+        return numberOfExtras;
     }
 
     public static void attemptRemoval(String roperName, String positionName, ArrayList positionNames, ArrayList positionDraw2, ArrayList positionDraw3, ArrayList partnerList) {

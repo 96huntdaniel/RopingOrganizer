@@ -51,4 +51,19 @@ public class ArraySorter {
         //System.out.println(sortedArray);
         return sortedArray;
     }
+
+    public static String mostCommon(ArrayList inputArray) {
+        String mostCommonElement = null;
+        ArrayList sortedArray = new ArrayList();
+        ArrayList tempArray = new ArrayList();
+        int maxOccurences = 0;
+        for (int i = 0; i < inputArray.size(); i++) {
+            if (Collections.frequency(inputArray, inputArray.get(i)) > maxOccurences) {
+                maxOccurences = Collections.frequency(inputArray, (inputArray.get(i)));
+                mostCommonElement = (String) inputArray.get(i);
+            }
+        }
+        System.out.println("Most common element is " + mostCommonElement + " with " + Collections.frequency(inputArray, mostCommonElement));
+        return mostCommonElement;
+    }
 }
