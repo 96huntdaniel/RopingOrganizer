@@ -153,6 +153,11 @@ public class ExcelReader {
                         //for each header that needs 2 partners, draw 2 heelers
                         while (true) {
                             String partner = getRandomPartner(heelerNames);
+                            String[] splitRoper = headerDraw2.get(i).toString().split("\\s+");
+                            String[] splitPartner = partner.split("\\s+");
+                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
+
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(headerDraw2.get(i).toString() + " " + partner)) {
                                 System.out.println("Tried to add... " + headerDraw2.get(i).toString() + " " + partner + " but that entry already exists.");
@@ -160,7 +165,7 @@ public class ExcelReader {
                             } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
                                 System.out.println("Tried " + headerDraw2.get(i).toString() + " " + partner + " which exceeds " + maxRank);
                                 //continue;
-                            } else if (partner.equals(headerDraw2.get(i).toString())) {
+                            } else if (partnerFirstLast.equals(roperFirstLast)) {
                                 System.out.println("Same person, trying again. Tried " + headerDraw2.get(i).toString() + " and " + partner);
                                 //continue;
                             } else if (isMaxRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners) && j < heelerNames.size() - 1) {
@@ -193,6 +198,10 @@ public class ExcelReader {
                                 break;
                             }
                             String partner = getRandomPartner(heelerNames);
+                            String[] splitRoper = headerDraw3.get(i).toString().split("\\s+");
+                            String[] splitPartner = partner.split("\\s+");
+                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(headerDraw3.get(i).toString() + " " + partner)) {
                                 System.out.println("Tried to add... " + headerDraw3.get(i).toString() + " " + partner + " but that entry already exists.");
@@ -204,7 +213,7 @@ public class ExcelReader {
                                 //continue;
                                 attempts--;
                                 tempArray.remove(partner);
-                            } else if (partner.equals(headerDraw3.get(i).toString())) {
+                            } else if (partnerFirstLast.equals(roperFirstLast)) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + headerDraw3.get(i).toString());
                                 //continue;
                                 attempts--;
@@ -235,6 +244,10 @@ public class ExcelReader {
                         //for each header that needs 2 partners, draw 2 headers
                         while (true) {
                             String partner = getRandomPartner(heelerNames);
+                            String[] splitRoper = headerDraw3.get(i).toString().split("\\s+");
+                            String[] splitPartner = partner.split("\\s+");
+                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(headerDraw3.get(i).toString() + " " + partner)) {
                                 System.out.println("Tried to add... " + headerDraw3.get(i).toString() + " " + partner + " but that entry already exists.");
@@ -242,7 +255,7 @@ public class ExcelReader {
                             } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
                                 System.out.println("Tried " + headerDraw3.get(i).toString() + " " + partner + " which exceeds " + maxRank);
                                 //continue;
-                            } else if (partner.equals(headerDraw3.get(i).toString())) {
+                            } else if (partnerFirstLast.equals(roperFirstLast)) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + headerDraw3.get(i).toString());
                                 //continue;
                             } else if (isMaxRuns(partner, "heeler", heelerNames, heelerDraw2, heelerDraw3, partners) && j < heelerNames.size() - 1) {
@@ -272,6 +285,10 @@ public class ExcelReader {
                                 break;
                             }
                             String partner = getRandomPartner(heelerNames);
+                            String[] splitRoper = headerDraw2.get(i).toString().split("\\s+");
+                            String[] splitPartner = partner.split("\\s+");
+                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(headerDraw2.get(i).toString() + " " + partner)) {
                                 attempts--;
@@ -290,7 +307,7 @@ public class ExcelReader {
                                     break;
                                 }
                                 tempArray.remove(partner);
-                            } else if (partner.equals(headerDraw2.get(i).toString())) {
+                            } else if (partnerFirstLast.equals(roperFirstLast)) {
                                 System.out.println("Same person, trying again. Tried " + headerDraw2.get(i).toString() + " and " + partner);
                                 //continue;
                                 attempts--;
@@ -331,6 +348,10 @@ public class ExcelReader {
                         //for each heeler that needs 2 partners, draw 2 headers
                         while (true) {
                             String partner = getRandomPartner(headerNames);
+                            String[] splitRoper = heelerDraw2.get(i).toString().split("\\s+");
+                            String[] splitPartner = partner.split("\\s+");
+                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(partner + " " + heelerDraw2.get(i).toString())) {
                                 System.out.println("Tried to add... " + partner + " " + heelerDraw2.get(i).toString() + " but that entry already exists.");
@@ -338,7 +359,7 @@ public class ExcelReader {
                             } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
                                 System.out.println("Tried " + partner + " " + heelerDraw2.get(i).toString() + " which exceeds " + maxRank);
                                 //continue;
-                            } else if (partner.equals(heelerDraw2.get(i).toString())) {
+                            } else if (partnerFirstLast.equals(roperFirstLast)) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw2.get(i).toString());
                                 //continue;
                             } else if (isMaxRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners) && j < headerNames.size() - 1) {
@@ -369,6 +390,10 @@ public class ExcelReader {
                                 break;
                             }
                             String partner = getRandomPartner(headerNames);
+                            String[] splitRoper = heelerDraw3.get(i).toString().split("\\s+");
+                            String[] splitPartner = partner.split("\\s+");
+                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(partner + " " + heelerDraw3.get(i).toString())) {
                                 System.out.println("Tried to add... " + partner + " " + heelerDraw3.get(i).toString() + " but that entry already exists.");
@@ -384,7 +409,7 @@ public class ExcelReader {
                                     break;
                                 }
                                 tempArray.remove(partner);
-                            } else if (partner.equals(heelerDraw3.get(i).toString())) {
+                            } else if (partnerFirstLast.equals(roperFirstLast)) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw3.get(i).toString());
                                 attempts--;
                                 if (attempts < 1) {
@@ -422,6 +447,10 @@ public class ExcelReader {
                         //for each heeler that needs 3 partners, draw 3 headers
                         while (true) {
                             String partner = getRandomPartner(headerNames);
+                            String[] splitRoper = heelerDraw3.get(i).toString().split("\\s+");
+                            String[] splitPartner = partner.split("\\s+");
+                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(partner + " " + heelerDraw3.get(i).toString())) {
                                 System.out.println("Tried to add... " + partner + " " + heelerDraw3.get(i).toString() + " but that entry already exists.");
@@ -429,7 +458,7 @@ public class ExcelReader {
                             } else if (Float.parseFloat(rank1) + rank2 > maxRank) {
                                 System.out.println("Tried " + partner + " " + heelerDraw3.get(i).toString() + " which exceeds " + maxRank);
                                 //continue;
-                            } else if (partner.equals(heelerDraw3.get(i).toString())) {
+                            } else if (partnerFirstLast.equals(roperFirstLast)) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw3.get(i).toString());
                                 //continue;
                             } else if (isMaxRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners) && j < headerNames.size() - 1) {
@@ -464,6 +493,10 @@ public class ExcelReader {
                             System.out.println(tempArray);
                             //System.out.println(tempArray);
                             String partner = getRandomPartner(tempArray);
+                            String[] splitRoper = heelerDraw2.get(i).toString().split("\\s+");
+                            String[] splitPartner = partner.split("\\s+");
+                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(partner + " " + heelerDraw2.get(i).toString())) {
                                 System.out.println("Tried to add... " + partner + " " + heelerDraw2.get(i).toString() + " but that entry already exists.");
@@ -479,7 +512,7 @@ public class ExcelReader {
                                     break;
                                 }
                                 tempArray.remove(partner);
-                            } else if (partner.equals(heelerDraw2.get(i).toString())) {
+                            } else if (partnerFirstLast.equals(roperFirstLast)) {
                                 System.out.println("Same person, trying again. Tried " + partner + " and " + heelerDraw2.get(i).toString() + " with " + attempts + " attempts left");
                                 attempts--;
                                 if (attempts < 1) {
