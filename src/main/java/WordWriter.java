@@ -32,7 +32,7 @@ public class WordWriter {
 
 
       ArrayList allEntries = new ArrayList();
-        Collections.shuffle(partnerData);
+        //Collections.shuffle(partnerData);
         for(int j = 0; j < partnerData.size(); j++) {
             String[] splitNames = partnerData.get(j).toString().split("\\s+");
             String headerName = splitNames[0] + " " + splitNames[1] + " " + splitNames[2];
@@ -88,8 +88,44 @@ public class WordWriter {
 
       myDocument.write(out);
       out.close();
+    }
 
+    public static void generateAnnouncerSheet(ArrayList partnerData, ArrayList headerDraw2, ArrayList headerDraw3, ArrayList heelerDraw2,
+                                        ArrayList heelerDraw3) throws IOException, InvalidFormatException {
+        XWPFDocument myDocument = new XWPFDocument();
+        FileOutputStream out = new FileOutputStream(new File("Announcer Sheet.docx"));
+        XWPFParagraph paragraph;
+        XWPFParagraph logo = myDocument.createParagraph();
+        logo.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun logoRun = logo.createRun();
+        System.out.println("Logo file: " + String.valueOf(WordWriter.class.getClass().getResourceAsStream("/GBKArena-LogoHorizontal-PRINT.jpeg")));
+        String logoFile = String.valueOf(WordWriter.class.getClass().getResourceAsStream("/GBKArena-LogoHorizontal-PRINT.jpeg")).substring(5);
 
+        InputStream fis = WordWriter.class.getClass().getResourceAsStream("/GBKArena-LogoHorizontal-PRINT.jpeg");
+        logoRun.addPicture(fis, XWPFDocument.PICTURE_TYPE_JPEG, logoFile, Units.toEMU(500), Units.toEMU(120));
+        logoRun.addBreak();
+
+        XWPFTable table = myDocument.createTable();
+        //create header
+        XWPFTableRow headerRow = table.getRow(0);
+        headerRow.getCell(0).setText("Team Number");
+        headerRow.addNewTableCell().setText("Header");
+        headerRow.addNewTableCell().setText("Heeler");
+        headerRow.addNewTableCell().setText("Team Rank");
+
+        for(int i = 0; i < partnerData.size(); i++) {
+            String[] splitNames = partnerData.get(i).toString().split("\\s+");
+            String headerName = splitNames[0] + " " + splitNames[1];
+            String heelerName = splitNames[3] + " " + splitNames[4];
+            String teamNumber = splitNames[6];
+            XWPFTableRow nextRow = table.createRow();
+            nextRow.getCell(0).setText(teamNumber);
+            nextRow.getCell(1).setText(headerName);
+            nextRow.getCell(2).setText(heelerName);
+            nextRow.getCell(3).setText(String.valueOf(Float.valueOf(splitNames[2]) + Float.valueOf(splitNames[5])));
+        }
+        myDocument.write(out);
+        out.close();
     }
 
     public static int getNumberOfRuns(String roperName, ArrayList positionDraw2, ArrayList positionDraw3) {
