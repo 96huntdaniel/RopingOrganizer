@@ -1,6 +1,8 @@
 import java.io.*;
 
+import org.apache.poi.ss.usermodel.BuiltinFormats;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -37,6 +39,9 @@ public class ExcelWriter {
 
         // spreadsheet object
         XSSFSheet spreadsheet = myWorkBook.getSheetAt(1);
+        CellStyle numericStyle = myWorkBook.createCellStyle();
+        //numericStyle.setDataFormat();
+        //spreadsheet.setDefaultColumnStyle(3, numericStyle);
         // creating a row object
         XSSFRow row;
 
@@ -48,7 +53,8 @@ public class ExcelWriter {
                 "0",
                 new Object[] { "Header", "Heeler", "Total Rank", "Team Number" });
 
-        Collections.shuffle(partnerData);
+        System.out.println("Excel writer partner data: " + partnerData);
+        //Collections.shuffle(partnerData);
         for(int i = 0; i < partnerData.size(); i++) {
             String[] splitNames = partnerData.get(i).toString().split("\\s+");
             String headerName = splitNames[0] + " " + splitNames[1];

@@ -114,12 +114,30 @@ public class ExcelReader {
 
         Collections.shuffle(partners);
         for(int i = 0; i < partners.size(); i++) {
+            String teamNumber = null;
+            if(i < 9) {
+                teamNumber = "0" + Integer.valueOf(i+1);
+            } else {
+                teamNumber = String.valueOf(i+1);
+            }
             //attach team number to partners
-            partners.set(i, String.valueOf(partners.get(i) + " " + Integer.valueOf(i+1)));
+            partners.set(i, partners.get(i) + " " + teamNumber);
         }
+        ArraySorter.sortArray(partners, "teamNumber");
+        System.out.println(partners);
         ExcelWriter.populateEntries(partners);
         WordWriter.generatePrintoff(partners, headerDraw2, headerDraw3, heelerDraw2, heelerDraw3);
+        WordWriter.generateAnnouncerSheet(partners, headerDraw2, headerDraw3, heelerDraw2, heelerDraw3);
 
+    }
+
+    public static String intToString(int num, int digits) {
+        StringBuffer s = new StringBuffer(digits);
+        int zeroes = digits - (int) (Math.log(num) / Math.log(10)) - 1;
+        for (int i = 0; i < zeroes; i++) {
+            s.append(0);
+        }
+        return s.append(num).toString();
     }
 
     public static ArrayList<String> generatePartners(ArrayList headerDraw2, ArrayList headerDraw3, ArrayList heelerDraw2, ArrayList heelerDraw3, ArrayList headerNames,
