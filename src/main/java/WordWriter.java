@@ -1,11 +1,16 @@
 
 import java.io.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.aspose.words.Font;
+import com.aspose.words.TableAlignment;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 
 
 public class WordWriter {
@@ -105,13 +110,38 @@ public class WordWriter {
         logoRun.addPicture(fis, XWPFDocument.PICTURE_TYPE_JPEG, logoFile, Units.toEMU(500), Units.toEMU(120));
         logoRun.addBreak();
 
+
+
         XWPFTable table = myDocument.createTable();
+        table.setTableAlignment(TableRowAlign.CENTER);
+        CTTblWidth width = table.getCTTbl().addNewTblPr().addNewTblW();
+        width.setType(STTblWidth.DXA);
+        width.setW(BigInteger.valueOf(9072));
         //create header
         XWPFTableRow headerRow = table.getRow(0);
+       /* XWPFRun column1 = headerRow.addNewTableCell().addParagraph().createRun();
+        column1.setBold(true);
+        column1.setFontSize(16);
+        column1.setText("Team Number");
+        XWPFRun column2 = headerRow.addNewTableCell().addParagraph().createRun();
+        column2.setBold(true);
+        column2.setFontSize(16);
+        column2.setText("Header");
+        XWPFRun column3 = headerRow.addNewTableCell().addParagraph().createRun();
+        column3.setBold(true);
+        column3.setFontSize(16);
+        column3.setText("Heeler");
+        XWPFRun column4 = headerRow.addNewTableCell().addParagraph().createRun();
+        column4.setBold(true);
+        column4.setFontSize(16);
+        column4.setText("Team Rank");*/
         headerRow.getCell(0).setText("Team Number");
         headerRow.addNewTableCell().setText("Header");
         headerRow.addNewTableCell().setText("Heeler");
         headerRow.addNewTableCell().setText("Team Rank");
+
+        //headerRow.getCell(0).setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
 
         for(int i = 0; i < partnerData.size(); i++) {
             String[] splitNames = partnerData.get(i).toString().split("\\s+");
@@ -123,6 +153,10 @@ public class WordWriter {
             nextRow.getCell(1).setText(headerName);
             nextRow.getCell(2).setText(heelerName);
             nextRow.getCell(3).setText(String.valueOf(Float.valueOf(splitNames[2]) + Float.valueOf(splitNames[5])));
+           // nextRow.getCell(0).getCTTc().addNewTcPr().addNewTcW().setW(4);
+           // nextRow.getCell(1).getCTTc().addNewTcPr().addNewTcW().setW(4);
+           // nextRow.getCell(2).getCTTc().addNewTcPr().addNewTcW().setW(4);
+           // nextRow.getCell(3).getCTTc().addNewTcPr().addNewTcW().setW(4);
         }
         myDocument.write(out);
         out.close();
