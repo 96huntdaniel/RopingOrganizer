@@ -623,6 +623,10 @@ public class ExcelReader {
                     }
                     System.out.println(tempArray);
                     String partner = getRandomPartner(tempArray);
+                    String[] splitRoper = totalRuns.get(x).toString().split("\\s+");
+                    String[] splitPartner = partner.split("\\s+");
+                    String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                    String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                     System.out.println(totalRuns.get(x).toString() + " picking from " + tempArray);
 
                     String partnerEntry = null;
@@ -657,7 +661,7 @@ public class ExcelReader {
                         System.out.println("Tried " + partner + " " + totalRuns.get(x).toString() + " which exceeds " + maxRank + " with " + attempts + " attempts left");
                         tempArray.remove(partner);
                         attempts--;
-                    } else if (partner.equals(totalRuns.get(x).toString())) {
+                    } else if (partnerFirstLast.equals(roperFirstLast)) {
                         System.out.println("Same person, trying again. Tried " + partner + " and " + totalRuns.get(x).toString() + " with " + attempts + " attempts left");
                         tempArray.remove(partner);
                         attempts--;
