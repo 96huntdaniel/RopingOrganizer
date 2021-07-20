@@ -113,6 +113,7 @@ public class ExcelReader {
         }
 
         Collections.shuffle(partners);
+        partners = ArraySorter.evenlySpace(partners, 3);
         for(int i = 0; i < partners.size(); i++) {
             String teamNumber = null;
             if(i < 9) {
@@ -489,8 +490,8 @@ public class ExcelReader {
                             if (tempArray.size() < 1) {
                                 break;
                             }
-                            System.out.println("Trying to get " + heelerDraw2.get(i).toString() + "'s " + j + " run.");
-                            System.out.println(tempArray);
+                            //System.out.println("Trying to get " + heelerDraw2.get(i).toString() + "'s " + j + " run.");
+                            //System.out.println(tempArray);
                             //System.out.println(tempArray);
                             String partner = getRandomPartner(tempArray);
                             String[] splitRoper = heelerDraw2.get(i).toString().split("\\s+");
@@ -596,7 +597,7 @@ public class ExcelReader {
             //cleaning up
             int maxRuns = Collections.frequency(maxRunDraw2, totalRuns.get(x)) + Collections.frequency(maxRunDraw3, totalRuns.get(x));
             maxRuns *= 3;
-            System.out.println(totalRuns.get(x) + "'s max runs is " + maxRuns);
+            //System.out.println(totalRuns.get(x) + "'s max runs is " + maxRuns);
             ArrayList allEntries = new ArrayList();
 
             for (int j = 0; j < partners.size(); j++) {
@@ -611,7 +612,7 @@ public class ExcelReader {
                 }
             }
             int runsNeeded = maxRuns - Collections.frequency(allEntries, totalRuns.get(x));
-            System.out.println(totalRuns.get(x) + "'s runs needed is " + runsNeeded);
+            //System.out.println(totalRuns.get(x) + "'s runs needed is " + runsNeeded);
             ArrayList tempArray = (ArrayList) cloneArray.clone();
             for (int y = 0; y < runsNeeded; y++) {
                 int attempts = 10000;
@@ -621,13 +622,13 @@ public class ExcelReader {
                     if (tempArray.size() < 1) {
                         break;
                     }
-                    System.out.println(tempArray);
+                    //System.out.println(tempArray);
                     String partner = getRandomPartner(tempArray);
                     String[] splitRoper = totalRuns.get(x).toString().split("\\s+");
                     String[] splitPartner = partner.split("\\s+");
                     String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
                     String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
-                    System.out.println(totalRuns.get(x).toString() + " picking from " + tempArray);
+                    //System.out.println(totalRuns.get(x).toString() + " picking from " + tempArray);
 
                     String partnerEntry = null;
                     if(isMaxPositionName.equals("header")) {
@@ -645,7 +646,6 @@ public class ExcelReader {
                     if(isMaxPositionName.equals("heeler")) {
                         //System.out.println(partner + " 's extra runs are " + getNumberOfExtraRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners));
                         if(getNumberOfExtraRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners) > currentMaxExtras) {
-                            System.out.println("At least we got here");
                             currentMaxExtras = getNumberOfExtraRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners);
                             //System.out.println("Their number of extras is " + getNumberOfExtraRuns(partner, "header", headerNames, headerDraw2, headerDraw3, partners)
                                     //+ " and the current is " + currentMaxExtras);
@@ -712,12 +712,12 @@ public class ExcelReader {
             //System.out.println("Added " + headerName + " and " + heelerName);
         }
         int numOfEntries = Collections.frequency(positionDraw2, roperName) + Collections.frequency(positionDraw3, roperName);
-        System.out.println(roperName + " is in draw 2 " + Collections.frequency(positionDraw2, roperName) + " time and draw 3 " +
-                Collections.frequency(positionDraw3, roperName) + " times.");
+        //System.out.println(roperName + " is in draw 2 " + Collections.frequency(positionDraw2, roperName) + " time and draw 3 " +
+              //  Collections.frequency(positionDraw3, roperName) + " times.");
         if(positionName == "heeler") {
             //if we're here, it means the heelerlist was bigger. We're looping the headerDrawX arrays and trying to remove from heelerNames
             if(numOfEntries == 1) {
-                System.out.println("In there once, with " + Collections.frequency(heelerRuns, roperName) + " current runs.");
+                //System.out.println("In there once, with " + Collections.frequency(heelerRuns, roperName) + " current runs.");
                 if (Collections.frequency(heelerRuns, roperName) == 3) {
                     //System.out.println(roperName + " has three runs. Removing from array.");
                     return true;
@@ -725,7 +725,7 @@ public class ExcelReader {
                 }
             }
             if(numOfEntries == 2) {
-                System.out.println("In there twice.");
+                //out.println("In there twice.");
                 if(Collections.frequency(heelerRuns, roperName) == 6) {
                     //System.out.println(roperName + " has six runs. Removing from array.");
                     return true;
@@ -738,17 +738,17 @@ public class ExcelReader {
         if(positionName == "header") {
             //if we're here, it means the headerlist was bigger. We're looping the heelerDrawX arrays and trying to remove from headerNames
             if(numOfEntries == 1) {
-                System.out.println("In there once, with " + Collections.frequency(headerRuns, roperName) + " current runs.");
+                //System.out.println("In there once, with " + Collections.frequency(headerRuns, roperName) + " current runs.");
                 if(Collections.frequency(headerRuns, roperName) == 3) {
-                    System.out.println(roperName + " has three runs. Removing from array.");
+                    //System.out.println(roperName + " has three runs. Removing from array.");
                     return true;
                     //System.out.println("Position names: " + positionNames);
                 }
             }
             if(numOfEntries == 2) {
-                System.out.println("In there twice.");
+                //System.out.println("In there twice.");
                 if(Collections.frequency(headerRuns, roperName) == 6) {
-                    System.out.println(roperName + " has six runs. Removing from array.");
+                    //System.out.println(roperName + " has six runs. Removing from array.");
                     return true;
                 }
             }
