@@ -116,7 +116,7 @@ public class WordWriter {
         table.setTableAlignment(TableRowAlign.CENTER);
         CTTblWidth width = table.getCTTbl().addNewTblPr().addNewTblW();
         width.setType(STTblWidth.DXA);
-        width.setW(BigInteger.valueOf(9072));
+        width.setW(BigInteger.valueOf(10572));
         //create header
         XWPFTableRow headerRow = table.getRow(0);
        /* XWPFRun column1 = headerRow.addNewTableCell().addParagraph().createRun();
@@ -135,10 +135,15 @@ public class WordWriter {
         column4.setBold(true);
         column4.setFontSize(16);
         column4.setText("Team Rank");*/
-        headerRow.getCell(0).setText("Team Number");
-        headerRow.addNewTableCell().setText("Header");
-        headerRow.addNewTableCell().setText("Heeler");
-        headerRow.addNewTableCell().setText("Team Rank");
+        headerRow.getCell(0).setText("Team #");
+        headerRow.addNewTableCell().setText("   Header  ");
+        headerRow.addNewTableCell().setText("   Heeler  ");
+        headerRow.addNewTableCell().setText("   Rank   ");
+        headerRow.addNewTableCell().setText("   Round 1 ");
+        headerRow.addNewTableCell().setText("   Round 2 ");
+        headerRow.addNewTableCell().setText("   Round 3 ");
+        headerRow.addNewTableCell().setText("   Round 4 ");
+
 
         //headerRow.getCell(0).setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
 
@@ -152,7 +157,11 @@ public class WordWriter {
             nextRow.getCell(0).setText(teamNumber);
             nextRow.getCell(1).setText(headerName);
             nextRow.getCell(2).setText(heelerName);
-            nextRow.getCell(3).setText(String.valueOf(Float.valueOf(splitNames[2]) + Float.valueOf(splitNames[5])));
+            nextRow.getCell(3).setText(" " + String.valueOf(Float.valueOf(splitNames[2]) + Float.valueOf(splitNames[5])));
+            nextRow.getCell(4).setText("\t\t\t");
+            nextRow.getCell(5).setText("\t\t\t");
+            nextRow.getCell(6).setText("\t\t\t");
+            nextRow.getCell(7).setText("\t\t\t");
            // nextRow.getCell(0).getCTTc().addNewTcPr().addNewTcW().setW(4);
            // nextRow.getCell(1).getCTTc().addNewTcPr().addNewTcW().setW(4);
            // nextRow.getCell(2).getCTTc().addNewTcPr().addNewTcW().setW(4);
