@@ -57,39 +57,39 @@ public class ExcelReader {
             }
             //pull the header's name from the first two cells
             if (row.getCell(0) != null && row.getCell(0).getCellType() != BLANK) {
-                if (!headerNames.contains(row.getCell(0).toString() + " " + row.getCell(1).toString() + " " + row.getCell(2))) {
-                    headerNames.add(row.getCell(0).toString() + " " + row.getCell(1).toString() + " " + row.getCell(2));
+                if (!headerNames.contains(row.getCell(0).toString().replaceAll("\\s", "") + " " + row.getCell(1).toString().replaceAll("\\s", "") + " " + row.getCell(2))) {
+                    headerNames.add(row.getCell(0).toString().replaceAll("\\s", "") + " " + row.getCell(1).toString().replaceAll("\\s", "") + " " + row.getCell(2));
                 }
                 if (row.getCell(3) != null && row.getCell(3).getCellType() != BLANK) {
                     //header has a heeler. put header into the draw2
-                    headerDraw2.add(row.getCell(0).toString() + " " + row.getCell(1).toString() + " " + row.getCell(2));
+                    headerDraw2.add(row.getCell(0).toString().replaceAll("\\s", "") + " " + row.getCell(1).toString().replaceAll("\\s", "") + " " + row.getCell(2));
                 } else {
                     //they entered as a header without a partner. put them in the draw 3
-                    headerDraw3.add(row.getCell(0).toString() + " " + row.getCell(1).toString() + " " + row.getCell(2));
+                    headerDraw3.add(row.getCell(0).toString().replaceAll("\\s", "") + " " + row.getCell(1).toString().replaceAll("\\s", "") + " " + row.getCell(2));
                 }
 
             }
             //pull the heeler's name
             if (row.getCell(3) != null && row.getCell(3).getCellType() != BLANK) {
-                if (!heelerNames.contains(row.getCell(3).toString() + " " + row.getCell(4).toString() + " " + row.getCell(5))) {
-                    heelerNames.add(row.getCell(3).toString() + " " + row.getCell(4).toString() + " " + row.getCell(5));
+                if (!heelerNames.contains(row.getCell(3).toString().replaceAll("\\s", "") + " " + row.getCell(4).toString().replaceAll("\\s", "") + " " + row.getCell(5))) {
+                    heelerNames.add(row.getCell(3).toString().replaceAll("\\s", "") + " " + row.getCell(4).toString().replaceAll("\\s", "") + " " + row.getCell(5));
                 }
 
                 if (row.getCell(0) != null && row.getCell(1).getCellType() != BLANK) {
                     //heeler has a header. put heeler into the draw2
-                    heelerDraw2.add(row.getCell(3).toString() + " " + row.getCell(4).toString() + " " + row.getCell(5));
+                    heelerDraw2.add(row.getCell(3).toString().replaceAll("\\s", "") + " " + row.getCell(4).toString().replaceAll("\\s", "") + " " + row.getCell(5));
                 } else {
                     //they entered as a header without a partner. put them in the draw 3
-                    heelerDraw3.add(row.getCell(3).toString() + " " + row.getCell(4).toString() + " " + row.getCell(5));
+                    heelerDraw3.add(row.getCell(3).toString().replaceAll("\\s", "") + " " + row.getCell(4).toString().replaceAll("\\s", "") + " " + row.getCell(5));
                 }
             }
 
             if (row.getCell(0) != null && row.getCell(3) != null && row.getCell(0).getCellType() != BLANK && row.getCell(3).getCellType() != BLANK) {
-                System.out.println(row.getCell(0).toString() + " " + row.getCell(1).toString()
-                        + " and " + row.getCell(3).toString() + " "
+                System.out.println(row.getCell(0).toString().replaceAll("\\s", "") + " " + row.getCell(1).toString().replaceAll("\\s", "")
+                        + " and " + row.getCell(3).toString().replaceAll("\\s", "") + " "
                         + row.getCell(4).toString() + " have entered together.");
-                partners.add(row.getCell(0).toString() + " " + row.getCell(1).toString() + " " + row.getCell(2)
-                        + " " + row.getCell(3).toString() + " " + row.getCell(4).toString() + " " + row.getCell(5));
+                partners.add(row.getCell(0).toString().replaceAll("\\s", "") + " " + row.getCell(1).toString().replaceAll("\\s", "") + " " + row.getCell(2)
+                        + " " + row.getCell(3).toString().replaceAll("\\s", "") + " " + row.getCell(4).toString().replaceAll("\\s", "") + " " + row.getCell(5));
             } else {
                 //add to draw 3
             }
