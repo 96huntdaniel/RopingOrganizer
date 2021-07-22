@@ -156,7 +156,7 @@ public class ExcelReader {
                             String partner = getRandomPartner(heelerNames);
                             String[] splitRoper = headerDraw2.get(i).toString().split("\\s+");
                             String[] splitPartner = partner.split("\\s+");
-                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String roperFirstLast = splitRoper[0] + " " + splitRoper[1];
                             String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
 
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
@@ -201,7 +201,7 @@ public class ExcelReader {
                             String partner = getRandomPartner(heelerNames);
                             String[] splitRoper = headerDraw3.get(i).toString().split("\\s+");
                             String[] splitPartner = partner.split("\\s+");
-                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String roperFirstLast = splitRoper[0] + " " + splitRoper[1];
                             String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(headerDraw3.get(i).toString() + " " + partner)) {
@@ -236,7 +236,7 @@ public class ExcelReader {
                 }
                 partners = cleanup("headerDraw2", totalRuns, heelerDraw2, heelerDraw3, headerDraw2, headerDraw3,
                         maxRank, headerNames, heelerNames, partners);
-            } else if (headerDraw2.size() > headerDraw3.size()) {
+            } else if (headerDraw2.size() >= headerDraw3.size()) {
                 //now header draw 3
                 System.out.println("HEADER DRAW 3");
                 for (int i = 0; i < headerDraw3.size(); i++) {
@@ -247,7 +247,7 @@ public class ExcelReader {
                             String partner = getRandomPartner(heelerNames);
                             String[] splitRoper = headerDraw3.get(i).toString().split("\\s+");
                             String[] splitPartner = partner.split("\\s+");
-                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String roperFirstLast = splitRoper[0] + " " + splitRoper[1];
                             String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(headerDraw3.get(i).toString() + " " + partner)) {
@@ -288,7 +288,7 @@ public class ExcelReader {
                             String partner = getRandomPartner(heelerNames);
                             String[] splitRoper = headerDraw2.get(i).toString().split("\\s+");
                             String[] splitPartner = partner.split("\\s+");
-                            String roperFirstLast = splitRoper[0]+" "+splitRoper[1];
+                            String roperFirstLast = splitRoper[0] + " " + splitRoper[1];
                             String partnerFirstLast = splitPartner[0] + " " + splitPartner[1];
                             float rank2 = Float.parseFloat(partner.substring(partner.length() - 3));
                             if (partners.contains(headerDraw2.get(i).toString() + " " + partner)) {
@@ -336,7 +336,8 @@ public class ExcelReader {
                         maxRank, headerNames, heelerNames, partners);
             }
 
-        } else if (heelerNames.size() < headerNames.size()) {
+            //} else if (heelerNames.size() < headerNames.size()) {
+        } else {
             //more heelers than headers, so headers will have extra runs.
             //now heeler draw 2
             if (heelerDraw2.size() < heelerDraw3.size()) {
@@ -438,7 +439,7 @@ public class ExcelReader {
                 }
                 partners = cleanup("heelerDraw3", totalRuns, heelerDraw2, heelerDraw3, headerDraw2, headerDraw3,
                         maxRank, headerNames, heelerNames, partners);
-            } else if (heelerDraw2.size() > heelerDraw3.size()) {
+            } else if (heelerDraw2.size() >= heelerDraw3.size()) {
                 //there are more in the draw 2 array, so loop through the draw 3 until we get 3 partners for each entry
                 //now heeler draw 3
                 System.out.println("HEELER DRAW 3");
